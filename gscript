@@ -13,10 +13,8 @@ wget http://gentoo.mirrors.tds.net/gentoo/releases/amd64/autobuilds/current-stag
 tar xvjpf stage3-*.tar.bz2 --xattrs
 cpucores=$(grep -c ^processor /proc/cpuinfo)
 mkdir /etc/portage
+cp ${scriptdir}/make.conf /mnt/gentoo/etc/portage/make.conf
 echo "MAKEOPTS=\"-j${cpucores}\"" >> /mnt/gentoo/etc/portage/make.conf
-echo CFLAGS="-march=native ${CFLAGS}" >> /mnt/gentoo/etc/portage/make.conf
-echo CXXFLAGS="${CFLAGS}" >> /mnt/gentoo/etc/portage/make.conf
-echo USE="systemd -bindist" >> /mnt/gentoo/etc/portage/make.conf
 cp -L /etc/resolv.conf /mnt/gentoo/etc/
 mount -t proc proc /mnt/gentoo/proc
 mount --rbind /sys /mnt/gentoo/sys
