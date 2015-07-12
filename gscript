@@ -23,6 +23,5 @@ mount --make-rslave /mnt/gentoo/sys
 mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/dev
 cp ${scriptdir}/.config /mnt/gentoo/.config
-chmod +x post.sh
 cp ${scriptdir}/post.sh /mnt/gentoo/
 chroot /mnt/gentoo ./post.sh

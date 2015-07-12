@@ -5,7 +5,7 @@ emerge --sync
 rm portage-latest.tar.bz2
 rm stage3*
 eselect profile set 12
-emerge -uvDN @world gentoo-sources linux-firmware wpa_supplicant dhpcd wireless_tools grub
+emerge -uvDN @world gentoo-sources linux-firmware wpa_supplicant dhcpcd wireless_tools grub
 cd /usr/src/linux
 mv /.config .
 cpucores=grep -c ^processor /proc/cpuinfo
