@@ -20,9 +20,8 @@ mount --make-rslave /mnt/gentoo/dev
 chroot . /bin/bash
 emerge-webrsync
 eselect profile set 12
-emerge -uvDN @world gentoo-sources cinnamon gdm linux-firmware wpa_supplicant dhpcd wireless_tools grub
+emerge -uvDN @world gentoo-sources linux-firmware wpa_supplicant dhpcd wireless_tools grub
 grub2-install --target=i386-pc /dev/sda
 grub2-mkconfig -o /boot/grub/grub.cfg
 systemctl enable gdm
 systemctl enable sshd
-
