@@ -6,7 +6,7 @@ mkdir /mnt/gentoo
 mount /dev/sda3 /mnt/gentoo
 mkdir /mnt/gentoo/boot
 mount /dev/sda1 /mnt/gentoo/boot
-cd /mnt/gentoo/boot
+cd /mnt/gentoo/
 rsync -axP rsync://mirrors.rit.edu/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-201* .
 tar xvjpf stage3-*.tar.bz2 --xattrs
 cpucores = grep -c ^processor /proc/cpuinfo
