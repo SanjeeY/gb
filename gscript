@@ -1,0 +1,28 @@
+#/bin/bash
+sudo -s
+mkdir /mnt/gentoo
+mount /dev/sda3 /mnt/gentoo
+mkdir /mnt/gentoo/boot
+mount /dev/sda1 /mnt/gentoo/boot
+cd /mnt/gentoo/boot
+rsync -axP rsync://mirrors.rit.edu/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-201* .
+tar xvjpf stage3-*.tar.bz2 --xattrs
+cpucores = grep -c ^processor /proc/cpuinfo
+echo "MAKEOPTS=\"-j${cpucores}\"" >> /etc/portage/make.conf
+echo CFLAGS="-march=native ${CFLAGS}"
+echo CXXFLAGS="${CFLAGS}"
+cp -L /etc/resolv.conf /mnt/gentoo/etc/
+mount -t proc proc /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+mount --make-rslave /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+mount --make-rslave /mnt/gentoo/dev
+chroot . /bin/bash
+emerge-webrsync
+eselect profile set 12
+emerge -uvDN @world gentoo-sources cinnamon gdm linux-firmware wpa_supplicant dhpcd wireless_tools grub
+grub2-install --target=i386-pc /dev/sda
+grub2-mkconfig -o /boot/grub/grub.cfg
+systemctl enable gdm
+systemctl enable sshd
+
