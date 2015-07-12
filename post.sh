@@ -1,8 +1,6 @@
 #!/bin/bash
 source /etc/profile
 env-update
-wget http://gentoo.mirrors.tds.net/gentoo/snapshots/portage-latest.tar.xz
-tar -xvpf portage-latest.tar.bz2 -C /usr
 emerge --sync
 rm portage-latest.tar.bz2
 rm stage3*
