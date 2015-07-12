@@ -1,6 +1,4 @@
-/bin/bash
-umount /dev/sda1
-umount /dev/sda3
+#!/bin/bash
 mkfs.ext4 /dev/sda3
 mkfs.ext2 /dev/sda1
 mkdir /mnt/gentoo
@@ -21,11 +19,7 @@ mount --rbind /sys /mnt/gentoo/sys
 mount --make-rslave /mnt/gentoo/sys
 mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/dev
-chroot . /bin/bash
-emerge-webrsync
-eselect profile set 12
-emerge -uvDN @world gentoo-sources linux-firmware wpa_supplicant dhpcd wireless_tools grub
-grub2-install --target=i386-pc /dev/sda
-grub2-mkconfig -o /boot/grub/grub.cfg
-systemctl enable gdm
-systemctl enable sshd
+cp .config /mnt/gentoo/.kconfig
+chmod +x post.sh
+cp post.sh /mnt/gentoo/
+chroot /mnt/gentoo ./post.sh
