@@ -1,4 +1,4 @@
-#/bin/bash
+/bin/bash
 mkfs.ext4 /dev/sda3
 mkfs.ext2 /dev/sda1
 mkdir /mnt/gentoo
@@ -6,9 +6,10 @@ mount /dev/sda3 /mnt/gentoo
 mkdir /mnt/gentoo/boot
 mount /dev/sda1 /mnt/gentoo/boot
 cd /mnt/gentoo/
-rsync -axP rsync://mirrors.rit.edu/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-201* .
+dt=$(date -d "3 day ago" +%Y%m%d)
+wget http://gentoo.mirrors.tds.net/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2
 tar xvjpf stage3-*.tar.bz2 --xattrs
-cpucores = grep -c ^processor /proc/cpuinfo
+cpucores=grep -c ^processor /proc/cpuinfo
 echo "MAKEOPTS=\"-j${cpucores}\"" >> /etc/portage/make.conf
 echo CFLAGS="-march=native ${CFLAGS}"
 echo CXXFLAGS="${CFLAGS}"
