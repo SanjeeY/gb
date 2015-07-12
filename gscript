@@ -7,19 +7,21 @@ mkdir /mnt/gentoo/boot
 mount /dev/sda1 /mnt/gentoo/boot
 cd /mnt/gentoo/
 dt=$(date -d "3 day ago" +%Y%m%d)
+rm stage3*
 wget http://gentoo.mirrors.tds.net/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2
 tar xvjpf stage3-*.tar.bz2 --xattrs
-cpucores=grep -c ^processor /proc/cpuinfo
+cpucores=$(grep -c ^processor /proc/cpuinfo)
+mkdir /etc/portage
 echo "MAKEOPTS=\"-j${cpucores}\"" >> /etc/portage/make.conf
-echo CFLAGS="-march=native ${CFLAGS}"
-echo CXXFLAGS="${CFLAGS}"
+echo CFLAGS="-march=native ${CFLAGS}" >> /etc/portage/make.conf
+echo CXXFLAGS="${CFLAGS}" >> /etc/portage/make.conf
 cp -L /etc/resolv.conf /mnt/gentoo/etc/
 mount -t proc proc /mnt/gentoo/proc
 mount --rbind /sys /mnt/gentoo/sys
 mount --make-rslave /mnt/gentoo/sys
 mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/dev
-cp .config /mnt/gentoo/.kconfig
+cp .config /mnt/gentoo/.config
 chmod +x post.sh
 cp post.sh /mnt/gentoo/
 chroot /mnt/gentoo ./post.sh
