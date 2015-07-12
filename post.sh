@@ -1,5 +1,5 @@
 
-emerge-webrsync
+emerge --sync
 eselect profile set 12
 emerge -uvDN @world gentoo-sources linux-firmware wpa_supplicant dhpcd wireless_tools grub
 cd /usr/src/linux
