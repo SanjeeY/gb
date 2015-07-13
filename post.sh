@@ -4,7 +4,7 @@ env-update
 rm stage3*
 cd /usr
 wget http://gentoo.mirrors.tds.net/gentoo/snapshots/portage-latest.tar.xz
-tar xfv portage-latest.tar.gz
+tar xfv portage-latest.tar.xz
 emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 eselect profile set 12
