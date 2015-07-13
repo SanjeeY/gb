@@ -2,7 +2,7 @@
 source /etc/profile
 env-update
 emerge --sync
-emerge dev-vcs/git cpuinfo2cpuflags
+emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 rm stage3*
 eselect profile set 12

@@ -7,7 +7,7 @@ mount /dev/sda3 /mnt/gentoo
 mkdir /mnt/gentoo/boot
 mount /dev/sda1 /mnt/gentoo/boot
 cd /mnt/gentoo/
-dt=$(date -d "3 day ago" +%Y%m%d)
+dt=$(date -d "4 day ago" +%Y%m%d)
 rm stage3*
 wget http://gentoo.mirrors.tds.net/gentoo/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2
 tar xvjpf stage3-*.tar.bz2 --xattrs
@@ -23,4 +23,5 @@ mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/dev
 cp ${scriptdir}/.config /mnt/gentoo/.config
 cp ${scriptdir}/post.sh /mnt/gentoo/
+cp -R ${scriptdir}/buildScripts /mnt/gentoo
 chroot /mnt/gentoo ./post.sh
