@@ -2,6 +2,7 @@
 source /etc/profile
 env-update
 if [ ! -d "/usr/portage"]
+then
   rm stage3*
   cd /usr
   wget http://gentoo.mirrors.tds.net/gentoo/snapshots/portage-latest.tar.xz
@@ -23,9 +24,7 @@ if [ ! -d "/usr/portage"]
   make modules_install
   make install
   emerge -uDN @world  wpa_supplicant dhcpcd wireless-tools grub
-  sed -i -e 's/BOOT/sda1/g' /etc/fstab
-  sed -i -e 's/SWAP/sda2/g' /etc/fstab
-  sed -i -e 's/ROOT/sda3/g' /etc/fstab
+
   grub2-install --target=i386-pc /dev/sda
   grub2-mkconfig -o /boot/grub/grub.cfg
   systemctl enable sshd
@@ -37,10 +36,12 @@ fi
 echo "Do you want to install xorg-server?"
 read xorg
 if ["$xorg" == "y"];
+then
   ./buildScripts/xorg.sh
-  echo "Do you want to install cinnamon IDE?"
+  echo "Do you want to install cinnamon DE?"
   read cinnamon
   if["$cinnamon" == "y"]
+  then
     ./buildScripts/buildCinnamon.sh
   fi
 fi
