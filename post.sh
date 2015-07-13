@@ -9,7 +9,7 @@ eselect profile set 12
 echo "=sys-devel/clang-3.6.1-r100 ~amd64" >> /etc/portage/package.accept_keywords
 echo "=sys-devel/llvm-3.6.1 ~amd64" >> /etc/portage/package.accept_keywords
 echo "sys-devel/llvm clang" >> /etc/portage/package.use/llvm
-emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp
+emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp libev recode pixman libaacplus poppler cmake xorg-server mesa ffmpeg vlc x11-libs/cairo 
 export CC=clang
 export CXX=clang++
 emerge gentoo-sources linux-firmware
