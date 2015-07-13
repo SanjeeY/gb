@@ -1,10 +1,12 @@
 #!/bin/bash
 source /etc/profile
 env-update
-emerge --sync
+rm stage3*
+cd /usr
+wget http://gentoo.mirrors.tds.net/gentoo/snapshots/portage-latest.tar.xz
+tar xfv portage-latest.tar.gz
 emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
-rm stage3*
 eselect profile set 12
 echo "=sys-devel/clang-3.6.1-r100 ~amd64" >> /etc/portage/package.accept_keywords
 echo "=sys-devel/llvm-3.6.1 ~amd64" >> /etc/portage/package.accept_keywords
