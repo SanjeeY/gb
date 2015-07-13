@@ -9,18 +9,18 @@ read start
 if [ "$start" == "y" ]
 then
   mkdir /mnt/gentoo
-  echo "Enter root partition device(eg: sda3)"
+  echo "\n\nEnter root partition device(eg: sda3)"
   read rootPart
   mount $rootPart /mnt/gentoo
   mkdir /mnt/gentoo/boot
-  echo "Enter boot partition device(eg: sda1) - Must be ext2 for BIOS, vfat for UEFI installations."
+  echo "\n\nEnter boot partition device(eg: sda1) - Must be ext2 for BIOS, vfat for UEFI installations."
   read bootPart
   mount $bootPart /mnt/gentoo/boot
-  echo "Will there be a swap partition(y/n)?"
+  echo "\n\nWill there be a swap partition(y/n)?"
   read swapBool
   if [ "$swapBool" == "y" ]
   then
-    echo "Enter swap partition device (eg: sda2)"
+    echo "\nEnter swap partition device (eg: sda2)"
     read swapPart
     swapon $swapPart
   fi
