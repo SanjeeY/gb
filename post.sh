@@ -8,6 +8,7 @@ tar xfv portage-latest.tar.xz
 emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 eselect profile set 12
+emerge -C udev
 echo "=sys-devel/clang-3.6.1-r100 ~amd64" >> /etc/portage/package.accept_keywords
 echo "=sys-devel/llvm-3.6.1 ~amd64" >> /etc/portage/package.accept_keywords
 echo "sys-devel/llvm clang" >> /etc/portage/package.use/llvm
