@@ -39,7 +39,7 @@ then
   sed -i -e 's/ROOT/$rootPart/g' /etc/fstab
   cpucores=$(grep -c ^processor /proc/cpuinfo)
   cp ${scriptdir}/make.conf etc/portage/make.conf
-  printf "MAKEOPTS=\"-j${cpucores}\"" >> etc/portage/make.conf
+  printf "MAKEOPTS=\"-j${cpucores}\"\n" >> etc/portage/make.conf
   cp -L /etc/resolv.conf etc/
   mount -t proc proc proc
   mount --rbind /sys sys

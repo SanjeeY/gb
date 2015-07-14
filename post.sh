@@ -7,6 +7,7 @@ wget http://gentoo.mirrors.tds.net/gentoo/snapshots/portage-latest.tar.xz
 tar xfv portage-latest.tar.xz
 emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
+printf "\n" >> /etc/portage/make.conf
 eselect profile set 12
 printf "=sys-devel/clang-3.6.1-r100 ~amd64" >> /etc/portage/package.accept_keywords
 printf "=sys-devel/llvm-3.6.1 ~amd64" >> /etc/portage/package.accept_keywords
@@ -32,9 +33,10 @@ printf "\nPlease enter root password:\n"
 passwd
 printf "\nWould you like to set up wifi essid/key(y/n)?"
 read wifiBool
-if [ "$wifiBool" == "y" ]
+if [ "$wifiBool" == "y" ];
+then
   $wifiSetup=0
-  while[ "$wifiSetup" == "0" ]
+  while[ "$wifiSetup" == "0" ];
   do
     printf "\nEnter wifi ssid:"
     read wifiSSID
@@ -51,21 +53,21 @@ if [ "$wifiBool" == "y" ]
   sed -i -e 's/KEYVAR/$wifiKEY/g' /wpa_supplicant.conf
   mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 fi
-fi
 printf "\nDo you want to install xorg-server?"
 read xorg
 if ["$xorg" == "y"];
 then
-./buildScripts/xorg.sh
-printf "\nDo you want to install a desktop environment?"
-read deskBool
-if["$deskBool" == "y"]
-then
-  printf "\nEnter the number of the desktop environment you wish to install:"
-  printf "\n[1] - Cinnamon"
-  read deskEnv
-  case $deskEnv in
-    [1] )
-      ./buildScripts/buildCinnamon.sh ;;
-  esac
+  ./buildScripts/xorg.sh
+  printf "\nDo you want to install a desktop environment?"
+  read deskBool
+  if["$deskBool" == "y"];
+  then
+    printf "\nEnter the number of the desktop environment you wish to install:"
+    printf "\n[1] - Cinnamon"
+    read deskEnv
+    case $deskEnv in
+      [1] )
+        ./buildScripts/buildCinnamon.sh ;;
+    esac
+  fi
 fi
