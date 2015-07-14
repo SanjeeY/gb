@@ -10,9 +10,9 @@ then
   emerge cpuinfo2cpuflags
   cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
   eselect profile set 12
-  echo "=sys-devel/clang-3.6.1-r100 ~amd64" >> /etc/portage/package.accept_keywords
-  echo "=sys-devel/llvm-3.6.1 ~amd64" >> /etc/portage/package.accept_keywords
-  echo "sys-devel/llvm clang" >> /etc/portage/package.use/llvm
+  printf "=sys-devel/clang-3.6.1-r100 ~amd64" >> /etc/portage/package.accept_keywords
+  printf "=sys-devel/llvm-3.6.1 ~amd64" >> /etc/portage/package.accept_keywords
+  printf "sys-devel/llvm clang" >> /etc/portage/package.use/llvm
   emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp
   export CC=clang
   export CXX=clang++
@@ -30,18 +30,45 @@ then
   systemctl enable sshd
   systemctl enable dhcpcd
   systemctl enable ntpd
-  echo "Please enter root password:\n"
+  printf "\nPlease enter root password:\n"
   passwd
+  printf "\nWould you like to set up wifi essid/key(y/n)?"
+  read wifiBool
+  if [ "$wifiBool" == "y" ]
+    $wifiSetup=0
+    while[ "$wifiSetup" == "0"]
+    do
+      printf "\nEnter wifi ssid:"
+      read wifiSSID
+      printf "\nEnter wifi key:"
+      read wifiKEY
+      printf "\nESSID: ${wifiSSID}  Key: $wifiKEY"
+      printf "\nIs this correct?"
+      read wifiConfirm
+      if [ "$wifiConfirm" == "y" ]
+        $wifiSetup=1
+      fi
+    done
+    sed -i -e 's/SSIDVAR/$wifiSSID/g' /wpa_supplicant.conf
+    sed -i -e 's/KEYVAR/$wifiKEY/g' /wpa_supplicant.conf
+    mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
+  fi
 fi
-echo "Do you want to install xorg-server?"
+printf "\nDo you want to install xorg-server?"
 read xorg
 if ["$xorg" == "y"];
 then
   ./buildScripts/xorg.sh
-  echo "Do you want to install cinnamon DE?"
-  read cinnamon
-  if["$cinnamon" == "y"]
+  printf "\nDo you want to install a desktop environment?"
+  read deskBool
+  if["$deskBool" == "y"]
   then
-    ./buildScripts/buildCinnamon.sh
+    printf "\nEnter the number of the desktop environment you wish to install:"
+    printf "\n[1] - Cinnamon"
+    read deskEnv
+    case $deskEnv in
+      [1] )
+        ./buildScripts/buildCinnamon.sh ;;
+    esac
   fi
 fi
