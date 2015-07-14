@@ -48,7 +48,7 @@ then
   dt=$(date -d "5 day ago" +%Y%m%d)
   wget "${mirror}/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2"
   wget "${mirror}/snapshots/portage-latest.tar.xz"
-  mv portage-latest.tar.xz usr
+  mv portage-latest.tar.xz usr/
   tar xvjpf stage3*.tar.bz2 --xattrs
   rm stage3*
   cd usr
