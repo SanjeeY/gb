@@ -2,7 +2,7 @@
 source /etc/profile
 env-update
 eselect python set 1
-printf "POLICY_TYPES=\"strict\"" >> /etc/portage/make.conf
+printf "POLICY_TYPES=\"strict\"\n" >> /etc/portage/make.conf
 #*Remove some accidentally created files (easier than debugging for now)
 rm index*
 rm gentoo*
