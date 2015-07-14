@@ -3,7 +3,7 @@ scriptdir=$(pwd)
 printf "This Gentoo install script requires partitions to be formatted and unmounted.\n"
 printf "The kernel config provided supports most filesystems(Ext4, XFS, Reiser4. F2FS),\n so root partiton can be formatted based on livecd disk utilities.\n"
 printf "Only a three partition boot, swap, and root partition is supported at this time.\n"
-printf "Do you wish to continue(y/n)\n?"
+printf "Do you wish to continue(y/n)?\n"
 read start
 if [ "$start" == "y" ]
 then
@@ -26,7 +26,7 @@ then
   fi
 
   #Generate random seed for mirror selection
-  mirrorSeed=$((date +%S) | grep -o .$ | sed s/1/23/)
+  mirrorSeed=$(($(date +%s)%22+1))
   mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
   #Download and extract stage3 and portage files.
@@ -40,6 +40,7 @@ then
   cd usr
   tar xfv portage-latest.tar.xz
   rm portage-latest.tar.xz
+  cd ..
 
   #Update various configuration files in /etc
   printf "\nGENTOO_MIRRORS=\"" >> etc/portage/make.conf
