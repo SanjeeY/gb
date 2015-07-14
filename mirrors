@@ -7,7 +7,6 @@ http://gentoo.netnitco.net
 http://gentoo.osuosl.org/
 http://gentoo.mirrors.pair.com/
 ftp://gentoo.mirrors.pair.com/
-rsync://mirrors.rit.edu/gentoo/
 ftp://mirrors.rit.edu/gentoo/
 http://mirrors.rit.edu/gentoo/
 ftp://mirror.iawnet.sandia.gov/pub/gentoo/
@@ -18,6 +17,5 @@ ftp://ftp.ucsb.edu/pub/mirrors/linux/gentoo/
 http://mirror.lug.udel.edu/pub/gentoo/
 http://gentoo.cites.uiuc.edu/pub/gentoo/
 ftp://gentoo.cites.uiuc.edu/pub/gentoo/
-rsync://gentoo.cs.uni.edu/gentoo-distfiles
 http://gentoo.cs.uni.edu/
 http://mirror.usu.edu/mirrors/gentoo/

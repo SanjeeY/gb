@@ -40,7 +40,7 @@ then
   fi
 
   #Generate random seed for mirror selection
-  mirrorSeed=$(($(date +%s)%22+1))
+  mirrorSeed=$(($(date +%s)%21+1))
   mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
   #Download and extract stage3 and portage files.
