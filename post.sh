@@ -1,7 +1,7 @@
 #!/bin/bash
 source /etc/profile
 env-update
-if [ ! -d "/usr/portage" ]
+if [ -d "/usr/portage" ]
 then
   rm stage3*
   cd /usr
