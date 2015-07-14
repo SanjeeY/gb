@@ -9,9 +9,9 @@ emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 printf "\n" >> /etc/portage/make.conf
 eselect profile set 12
-printf "=sys-devel/clang-3.6.1-r100 ~amd64" >> /etc/portage/package.accept_keywords
-printf "=sys-devel/llvm-3.6.1 ~amd64" >> /etc/portage/package.accept_keywords
-printf "sys-devel/llvm clang" >> /etc/portage/package.use/llvm
+printf "=sys-devel/clang-3.6.1-r100 ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "=sys-devel/llvm-3.6.1 ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp
 export CC=clang
 export CXX=clang++
