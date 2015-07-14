@@ -17,7 +17,7 @@ then
   rootUUID=$(blkid /dev/${rootPart} | sed -n 's/.* UUID=\"\([^\"]*\)\".*/\1/p')
   printf "\nEncryption key for the partition will be asked for next."
   cryptsetup -s 512 luksFormat /dev/$rootPart
-  printf "\nRe-enter your encryption key below:"
+  printf "\nRe-enter your encryption key below:\n"
   cryptsetup luksOpen /dev/$rootPart ecroot
   mkfs.ext4 /dev/mapper/ecroot
   mount /dev/mapper/ecroot /mnt/gentoo

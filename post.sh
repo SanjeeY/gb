@@ -13,15 +13,9 @@ emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 printf "\n" >> /etc/portage/make.conf
 
-#Build and switch to clang. Also build some packages with gcc that break with clang.
-printf "=sys-devel/clang-3.6.1-r100 ~amd64\n" >> /etc/portage/package.accept_keywords
-printf "=sys-devel/llvm-3.6.1 ~amd64\n" >> /etc/portage/package.accept_keywords
+#Enable Linux 4 kernel
 printf "sys-kernel/hardened-sources ~amd64\n" >> /etc/portage/package.accept_keywords
-printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/llvm
-emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp pam util-linux cryptsetup
-export CC=clang
-export CXX=clang++
 
 #Download and build kernel. Uses included kernel config file from git.
 emerge =sys-kernel/hardened-sources-4.0.8 linux-firmware genkernel-next
@@ -31,7 +25,7 @@ genkernel --luks all
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
 eselect profile set 15
-emerge -uDN @world  wpa_supplicant dhcpcd wireless-tools grub
+emerge -uDN @world  wpa_supplicant dhcpcd wireless-tools grub ntp cryptsetup
 grub2-install --target=i386-pc /dev/sda
 grub2-mkconfig -o /boot/grub/grub.cfg
 
