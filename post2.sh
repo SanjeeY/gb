@@ -4,9 +4,7 @@ eselect profile set 15
 emerge -1 checkpolicy policycoreutils
 FEATURES="-selinux" emerge -1 selinux-base
 FEATURES="-selinux" emerge selinux-base-policy
-emerge -uDN @world wpa_supplicant dhcpcd wireless-tools grub ntp cryptsetup
-grub2-install --target=i386-pc /dev/sda
-grub2-mkconfig -o /boot/grub/grub.cfg
+emerge -uDN @world ntp 
 
 #Enables dhcpcd, and ntp.
 rc-update add dhcpcd default
