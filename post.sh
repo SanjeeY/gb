@@ -1,7 +1,8 @@
 #!/bin/bash
 source /etc/profile
 env-update
-
+eselect python set 1
+printf "POLICY_TYPES=\"strict\"" >> /etc/portage/make.conf
 #*Remove some accidentally created files (easier than debugging for now)
 rm index*
 rm gentoo*
@@ -15,17 +16,21 @@ printf "\n" >> /etc/portage/make.conf
 
 #Enable Linux 4 kernel
 printf "sys-kernel/hardened-sources ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "=sys-block/thin-provisioning-tools-0.4.1 ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/llvm
 
 #Download and build kernel. Uses included kernel config file from git.
-emerge =sys-kernel/hardened-sources-4.0.8 linux-firmware genkernel-next
+emerge =sys-kernel/hardened-sources-4.0.8 linux-firmware genkernel-next =sys-block/thin-provisioning-tools-0.4.1
 cd /usr/src/linux
 mv /.config .
 genkernel --luks all
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
 eselect profile set 15
-emerge -uDN @world  wpa_supplicant dhcpcd wireless-tools grub ntp cryptsetup
+emerge -1 checkpolicy policycoreutils
+FEATURES="-selinux" emerge -1 selinux-base
+FEATURES="-selinux" emerge selinux-base-policy
+emerge -uDN @world wpa_supplicant dhcpcd wireless-tools grub ntp cryptsetup
 grub2-install --target=i386-pc /dev/sda
 grub2-mkconfig -o /boot/grub/grub.cfg
 
