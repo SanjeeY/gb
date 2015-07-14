@@ -85,7 +85,7 @@ then
   #Copy kernel config, wifi config, post-chroot script, and other post-installation build scripts
   cp ${scriptdir}/.config .
   cp ${scriptdir}/wpa_supplicant.conf .
-  cp ${scriptdir}/post.sh .
+  cp ${scriptdir}/post* .
   cp ${scriptdir}/fstab etc
   cp -R ${scriptdir}/buildScripts .
 

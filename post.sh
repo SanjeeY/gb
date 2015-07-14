@@ -21,7 +21,7 @@ printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/llvm
 
 #Download and build kernel. Uses included kernel config file from git.
 USE="static" emerge busybox cryptsetup
-emerge =sys-kernel/hardened-sources-4.0.8 linux-firmware grub wpa_supplicant dhcpcd wireless-tools cryptsetup
+emerge =sys-kernel/hardened-sources-4.0.8 linux-firmware grub wpa_supplicant dhcpcd wireless-tools cpio openssl cryptsetup
 mkdir -p /usr/src/initramfs/{bin,dev,etc,lib,lib64,mnt/root,proc,root,sbin,sys}
 cp -a /dev/{null,console,tty,sda1} /usr/src/initramfs/dev/
 cp -a /dev/{urandom,random} /usr/src/initramfs/dev/
