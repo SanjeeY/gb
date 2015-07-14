@@ -11,22 +11,22 @@ then
   mkdir /mnt/gentoo
   printf "\n\nEnter root partition device(e.g. sda3)\n"
   read rootPart
-  mount $rootPart /mnt/gentoo
+  mount /dev/$rootPart /mnt/gentoo
   mkdir /mnt/gentoo/boot
   printf "\n\nEnter boot partition device(e.g. sda1)\nMust be ext2 for BIOS, vfat for UEFI installations\n"
   read bootPart
-  mount $bootPart /mnt/gentoo/boot
+  mount /dev/$bootPart /mnt/gentoo/boot
   printf "\n\nWill there be a swap partition(y/n)?\n"
   read swapBool
   if [ "$swapBool" == "y" ]
   then
     printf "\nEnter swap partition device (eg: sda2)\n"
     read swapPart
-    swapon $swapPart
+    swapon /dev/$swapPart
   fi
 
   #Generate random seed for mirror selection
-  mirrorSeed = $(( ( RANDOM % 10 )  + 1 ))
+  mirrorSeed = $(date +%S) | grep -o .$ | sed s/1/23/
   mirror = $(sed -n -e ${mirrorSeed}p mirror)
 
   #Download and extract stage3 and portage files.
