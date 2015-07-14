@@ -17,6 +17,7 @@ then
   rootUUID=$(blkid /dev/${rootPart} | sed -n 's/.* UUID=\"\([^\"]*\)\".*/\1/p')
   printf "\nEncryption key for the partition will be asked for next."
   cryptsetup -s 512 luksFormat /dev/$rootPart
+  printf "\nRe-enter your encryption key below:"
   cryptsetup luksOpen /dev/$rootPart ecroot
   mkfs.ext4 /dev/mapper/ecroot
   mount /dev/mapper/ecroot /mnt/gentoo
@@ -46,11 +47,11 @@ then
   #Download and extract stage3 and portage files.
   cd /mnt/gentoo/
   dt=$(date -d "5 day ago" +%Y%m%d)
-  wget "${mirror}/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2"
+  wget "${mirror}/releases/amd64/autobuilds/current-stage3-amd64-hardened/stage3-amd64-hardened-${dt}.tar.bz2"
   wget "${mirror}/snapshots/portage-latest.tar.xz"
-  mv portage-latest.tar.xz usr/
   tar xvjpf stage3*.tar.bz2 --xattrs
   rm stage3*
+  mv portage-latest.tar.xz usr/
   cd usr
   tar xfv portage-latest.tar.xz
   rm portage-latest.tar.xz

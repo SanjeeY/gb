@@ -18,6 +18,7 @@ printf "=sys-devel/clang-3.6.1-r100 ~amd64\n" >> /etc/portage/package.accept_key
 printf "=sys-devel/llvm-3.6.1 ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-kernel/hardened-sources ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
+printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/llvm
 emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp pam util-linux cryptsetup
 export CC=clang
 export CXX=clang++
