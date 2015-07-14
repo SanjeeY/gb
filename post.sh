@@ -36,7 +36,7 @@ then
   read wifiBool
   if [ "$wifiBool" == "y" ]
     $wifiSetup=0
-    while[ "$wifiSetup" == "0"]
+    while[ "$wifiSetup" == "0" ]
     do
       printf "\nEnter wifi ssid:"
       read wifiSSID
