@@ -9,7 +9,7 @@ printf "\n\nCryptsetup must be installed for the encrypted gentoo installer"
 printf "\nDo you wish to proceed?(y/n)\n"
 read haveCryptsetup
 if [ "$haveCryptsetup" == "y" ]
-
+then
   #Cryptsetup
   mkdir /mnt/gentoo
   printf "\n\nEnter root partition device(e.g. sda3)\n"
