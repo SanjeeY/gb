@@ -44,7 +44,7 @@ printf "\nWould you like to set up wifi essid/key(y/n)?"
 read wifiBool
 if [ "$wifiBool" == "y" ];
 then
-  $wifiSetup=0
+  wifiSetup=0
   while[ "$wifiSetup" == "0" ]
   do
     printf "\nEnter wifi ssid:"
@@ -55,7 +55,7 @@ then
     printf "\nIs this correct?"
     read wifiConfirm
     if [ "$wifiConfirm" == "y" ]
-      $wifiSetup=1
+      wifiSetup=1
     fi
   done
   sed -i -e 's/SSIDVAR/$wifiSSID/g' /wpa_supplicant.conf
@@ -66,12 +66,12 @@ fi
 #Xorg-server + desktop environment build scripts
 printf "\nDo you want to install xorg-server?"
 read xorg
-if ["$xorg" == "y"];
+if [ "$xorg" == "y" ];
 then
   ./buildScripts/xorg.sh
   printf "\nDo you want to install a desktop environment?"
   read deskBool
-  if["$deskBool" == "y"];
+  if[ "$deskBool" == "y" ];
   then
     printf "\nEnter the number of the desktop environment you wish to install:"
     printf "\n[1] - Cinnamon"
