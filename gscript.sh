@@ -26,8 +26,8 @@ then
   fi
 
   #Generate random seed for mirror selection
-  mirrorSeed = $(date +%S) | grep -o .$ | sed s/1/23/
-  mirror = $(sed -n -e ${mirrorSeed}p mirror)
+  mirrorSeed=$(date +%S) | grep -o .$ | sed s/1/23/
+  mirror=$(sed -n -e ${mirrorSeed}p mirror)
 
   #Download and extract stage3 and portage files.
   cd /mnt/gentoo/
