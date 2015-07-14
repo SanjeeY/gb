@@ -26,14 +26,14 @@ then
   fi
 
   #Generate random seed for mirror selection
-  mirrorSeed=$(date +%S) | grep -o .$ | sed s/1/23/
-  mirror=$(sed -n -e ${mirrorSeed}p mirror)
+  mirrorSeed=$((date +%S) | grep -o .$ | sed s/1/23/)
+  mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
   #Download and extract stage3 and portage files.
   cd /mnt/gentoo/
   dt=$(date -d "5 day ago" +%Y%m%d)
-  wget ${mirror}/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2
-  wget ${mirror}/snapshots/portage-latest.tar.xz
+  wget "${mirror}/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2"
+  wget "${mirror}/snapshots/portage-latest.tar.xz"
   mv portage-latest.tar.gz usr
   tar xvjpf stage3*.tar.bz2 --xattrs
   rm stage3*
