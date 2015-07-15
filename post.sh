@@ -18,6 +18,8 @@ printf "=sys-devel/clang-3.6.1-r100 ~amd64\n" >> /etc/portage/package.accept_key
 printf "=sys-devel/llvm-3.6.1 ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-kernel/ck-sources ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
+printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
+printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
 emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp
 export CC=clang
 export CXX=clang++
@@ -52,7 +54,7 @@ passwd
 #WPA_Supplicant configuration
 printf "\nWould you like to set up wifi essid/key(y/n)?"
 read wifiBool
-if [ "$wifiBool" == "y" ];
+if [ "$wifiBool" == "y" ]
 then
   printf "\nEnter wifi ssid:"
   read wifiSSID
@@ -67,12 +69,12 @@ fi
 #Xorg-server + desktop environment build scripts
 printf "\nDo you want to install xorg-server?"
 read xorg
-if [ "$xorg" == "y" ];
+if [ "$xorg" == "y" ]
 then
   ./buildScripts/xorg.sh
   printf "\nDo you want to install a desktop environment?"
   read deskBool
-  if[ "$deskBool" == "y" ];
+  if[ "$deskBool" == "y" ]
   then
     printf "\nEnter the number of the desktop environment you wish to install:"
     printf "\n[1] - Cinnamon"
