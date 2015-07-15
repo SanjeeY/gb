@@ -28,9 +28,8 @@ mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 #Download and extract stage3 and portage files.
 cd /mnt/gentoo/
-dt=$(date -d "5 day ago" +%Y%m%d)
-wget "${mirror}/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2"
-wget "${mirror}/snapshots/portage-latest.tar.xz"
+wget -rnd -l1 ${mirror}releases/amd64/autobuilds/current-stage3-amd64/ -A "stage3-amd64-20*.tar.bz2" -e robots=off
+wget ${mirror}/snapshots/portage-latest.tar.xz
 tar xvjpf stage3*.tar.bz2 --xattrs
 rm stage3*
 mv portage-latest.tar.xz usr/
