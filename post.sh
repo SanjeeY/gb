@@ -14,13 +14,13 @@ cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 printf "\n" >> /etc/portage/make.conf
 
 #Build and switch to clang. Also build some packages with gcc that break with clang.
-printf "=sys-devel/clang-3.6.1-r100 ~amd64\n" >> /etc/portage/package.accept_keywords
-printf "=sys-devel/llvm-3.6.1 ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "=sys-devel/clang ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "=sys-devel/llvm ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-kernel/ck-sources ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
 printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
-emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp
+emerge clang glibc guile autogen ntp
 export CC=clang
 export CXX=clang++
 

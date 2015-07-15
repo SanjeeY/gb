@@ -44,14 +44,14 @@ cd ..
 printf "\nGENTOO_MIRRORS=\"" >> etc/portage/make.conf
 printf $mirror >> etc/portage/make.conf
 printf "\"\n" >> etc/portage/make.conf
-sed -i -e 's/BOOT/${bootPart}/g' etc/fstab
+sed -i -e "s/BOOT/${bootPart}/g" etc/fstab
 if [ "$swapBool" == "y" ]
 then
-  sed -i -e 's/SWAP/${swapPart}/g' etc/fstab
+  sed -i -e "s/SWAP/${swapPart}/g" etc/fstab
 else
-  sed -i '/SWAP/d' etc/fstab
+  sed -i "/SWAP/d" etc/fstab
 fi
-sed -i -e 's/ROOT/${rootPart}/g' etc/fstab
+sed -i -e "s/ROOT/${rootPart}/g" etc/fstab
 cpucores=$(grep -c ^processor /proc/cpuinfo)
 cp ${scriptdir}/make.conf etc/portage/make.conf
 printf "MAKEOPTS=\"-j${cpucores}\"\n" >> etc/portage/make.conf
