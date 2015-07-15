@@ -1,6 +1,6 @@
 #!/bin/bash
 scriptdir=$(pwd)
-printf "Please format and mount your partitions.\n"
+printf "Please format your partitions prior to installation.\n"
 printf "The kernel config provided supports most filesystems(Ext4, XFS, Reiser4. F2FS),\n so root partiton can be formatted based on livecd disk utilities.\n"
 printf "Only a three partition boot, swap, and root partition is supported at this time.\n"
 #Read and mount partitions
@@ -22,7 +22,7 @@ then
 fi
 
 #Generate random seed for mirror selection
-mirrorSeed=$(($(date +%s)%22+1))
+mirrorSeed=$(($(date +%s)%21+1))
 mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 #Download and extract stage3 and portage files.
@@ -30,9 +30,9 @@ cd /mnt/gentoo/
 dt=$(date -d "5 day ago" +%Y%m%d)
 wget "${mirror}/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${dt}.tar.bz2"
 wget "${mirror}/snapshots/portage-latest.tar.xz"
-mv portage-latest.tar.xz usr
 tar xvjpf stage3*.tar.bz2 --xattrs
 rm stage3*
+mv portage-latest.tar.xz usr/
 cd usr
 tar xfv portage-latest.tar.xz
 rm portage-latest.tar.xz
