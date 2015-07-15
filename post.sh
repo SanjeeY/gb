@@ -3,9 +3,8 @@ source /etc/profile
 env-update
 
 #*Remove some accidentally created files (easier than debugging for now)
-rm index*
-rm gentoo*
 rm portage*
+mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 
 #Add CPU processor flags for builds such as ffmpeg
@@ -16,7 +15,7 @@ printf "\n" >> /etc/portage/make.conf
 #Build and switch to clang. Also build some packages with gcc that break with clang.
 printf "=sys-devel/clang-3.6.1-r100 ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "=sys-devel/llvm-3.6.1 ~amd64\n" >> /etc/portage/package.accept_keywords
-printf "=sys-kernel/ck-sources ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "sys-kernel/ck-sources ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 emerge =sys-devel/clang-3.6.1-r100 glibc guile autogen ntp
 export CC=clang
