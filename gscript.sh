@@ -22,7 +22,7 @@ then
 fi
 
 #Generate random seed for mirror selection
-numMirrors=$(wc -l mirrors)
+numMirrors=$(wc -l < mirrors)
 mirrorSeed=$((($(date +%s)%${numMirrors})+1))
 mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
