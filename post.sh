@@ -8,6 +8,7 @@ mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 
 #Add CPU processor flags for builds such as ffmpeg
+emerge --sync
 emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 printf "\n" >> /etc/portage/make.conf

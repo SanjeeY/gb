@@ -1,16 +1,18 @@
 #!/bin/bash
 scriptdir=$(pwd)
-printf "Please format your partitions prior to installation.\n"
+printf "Please create your partitions prior to installation.\n"
 printf "The kernel config provided supports most filesystems(Ext4, XFS, Reiser4. F2FS),\n so root partiton can be formatted based on livecd disk utilities.\n"
 printf "Only a three partition boot, swap, and root partition is supported at this time.\n"
 #Read and mount partitions
 mkdir /mnt/gentoo
 printf "\n\nEnter root partition device(e.g. sda3)\n"
 read rootPart
+mkfs.ext4 /dev/$rootPart
 mount /dev/$rootPart /mnt/gentoo
 mkdir /mnt/gentoo/boot
 printf "\n\nEnter boot partition device(e.g. sda1)\nMust be ext2 for BIOS, vfat for UEFI installations\n"
 read bootPart
+mkfs.ext2 /dev/$bootPart
 mount /dev/$bootPart /mnt/gentoo/boot
 printf "\n\nWill there be a swap partition(y/n)?\n"
 read swapBool
