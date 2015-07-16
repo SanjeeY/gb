@@ -59,7 +59,8 @@ then
   cp ${scriptdir}/post.sh .
   cp -R ${scriptdir}/buildScripts .
   cp ${scriptdir}/boot/* boot
-
+mkdir /mnt/gentoo/backup/
+XZ_OPT=-9 tar -cvpJf /backup/pigen.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
   #Enter chroot and execute post.sh
   chroot /mnt/gentoo ./post.sh
 

@@ -19,10 +19,13 @@ printf "sys-kernel/raspberrypi-sources **\n" >> /etc/portage/package.accept_keyw
 printf "sys-boot/raspberrypi-firmware ~arm\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 printf "dev-python/py -test\n" >> /etc/portage/package.use/llvm
+printf "dev-vcs/git -curl -webdav\n" >> /etc/portage/package.use/llvm
 printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
 printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
 
 #Download and build kernel.
+emerge -C openssl
+emerge openssl @preserved-rebuild
 emerge raspberrypi-sources raspberrypi-firmware
 cd /usr/src/linux
 mv /.config .
@@ -35,7 +38,7 @@ make modules
 #cp /usr/src/linux/arch/arm/boot/zImage /boot/kernel7.img
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
-eselect profile set 12
+eselect profile set 28
 emerge -uDN @world wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect
 
 #Enables ssh, dhcpcd, and ntp.
