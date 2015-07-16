@@ -13,7 +13,7 @@ printf "sys-kernel/gentoo-sources ~amd64\n" >> /etc/portage/package.accept_keywo
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
 printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
-emerge clang glibc guile autogen ntp
+emerge clang guile autogen ntp
 export CC=clang
 export CXX=clang++
 
@@ -40,8 +40,8 @@ systemctl enable ntpd
 #Update config files
 etc-update --automode -3
 
-./buildScripts/xorg.sh
-./buildScripts/buildCinnamon.sh
+#./buildScripts/xorg.sh
+#./buildScripts/buildCinnamon.sh
 
 #Root password prompt
 ./setp.sh
