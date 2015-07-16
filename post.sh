@@ -23,6 +23,7 @@ emerge gentoo-sources linux-firmware
 cd /usr/src/linux
 mv /.config .
 cpucores=$(grep -c ^processor /proc/cpuinfo)
+make oldconfig
 make -j${cpucores}
 #make modules
 make modules_install
