@@ -48,6 +48,7 @@ printf "[3.] Updating world and installing various network utilities [clang enab
 printf "======================================================================="
 eselect profile set 12
 emerge -C udev
+emerge systemd
 emerge -uDN @world wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect grub
 
 #Enables ssh, dhcpcd, and ntp.
@@ -71,7 +72,7 @@ XZ_OPT=-9 tar -cvpJf /backup/backup.tar.xz --directory=/ --exclude=proc --exclud
 
 printf "[4.] Building xorg-server"
 printf "======================================================================="
-./buildScripts/xorg.sh
+. /buildScripts/xorg.sh
 
 printf "[F2.] Archiving installation"
 printf "======================================================================="
@@ -80,7 +81,7 @@ XZ_OPT=-9 tar -cvpJf /backup/backup.xorg-server.tar.xz --directory=/ --exclude=p
 
 printf "[5.] Building Cinnamon"
 printf "======================================================================="
-./buildScripts/buildCinnamon.sh
+. /buildScripts/buildCinnamon.sh
 
 printf "[F3.] Archiving installation"
 printf "======================================================================="
