@@ -7,13 +7,11 @@ rm portage*
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 
-#Add CPU processor flags for builds such as ffmpeg
+#Sync portage tree
 emerge --sync
-emerge cpuinfo2cpuflags
-cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
-printf "\n" >> /etc/portage/make.conf
 
 #Build and switch to clang. Also build some packages with gcc that break with clang.
+mkdir /etc/portage/package.use/
 printf "=sys-devel/clang ~arm\n" >> /etc/portage/package.accept_keywords
 printf "=sys-devel/llvm ~arm\n" >> /etc/portage/package.accept_keywords
 printf "sys-kernel/raspberrypi-sources **\n" >> /etc/portage/package.accept_keywords
