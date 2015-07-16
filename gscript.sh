@@ -1,11 +1,10 @@
 #!/bin/bash
-{
 scriptdir=$(pwd)
 printf "==========================================================================================\n"
 printf "Replace configuration files in the root folder(such as kernel config, fstab, or make.conf)\n
 Warning: Editing the USE variable in make.conf may cause autobuild to fail.\n"
 printf "==========================================================================================\n"
-printf "Type 'y' to start"
+printf "\nType 'y' to start\n"
 read start
 if [ "$start" == "y" ]
 then
@@ -63,5 +62,5 @@ then
 
   #Enter chroot and execute post.sh
   chroot /mnt/gentoo ./post.sh
-  }
+
 fi

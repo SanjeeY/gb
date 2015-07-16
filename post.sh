@@ -4,12 +4,10 @@ source /etc/profile
 env-update
 
 #*Remove some accidentally created files (easier than debugging for now)
-rm portage*
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 
 #Build and switch to clang. Also build some packages with gcc that break with clang.
-USE="-test" emerge py
 printf "sys-devel/llvm ~arm\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/clang ~arm\n" >> /etc/portage/package.accept_keywords
 printf "app-arch/p7zip ~arm\n" >> /etc/portage/package.accept_keywords
@@ -19,9 +17,6 @@ printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 printf "dev-python/py -test\n" >> /etc/portage/package.use/llvm
 printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
 printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
-emerge llvm clang guile autogen ntp
-export CC=clang
-export CXX=clang++
 
 #Download and build kernel.
 emerge raspberrypi-sources raspberrypi-firmware
@@ -49,7 +44,8 @@ etc-update --automode -3
 
 ./setp.sh root
 mkdir /backup
-tar -cvpf /backup/backup.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
-7z a -mx9 /backup/backup.tar.7z /backup/backup.tar
-rm /backup/backup.tar
+XZ_OPT=-9 tar -cvpJf /backup/pigen.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
+emerge clang llvm
+
+XZ_OPT=-9 tar -cvpJf /backup/pigen.clang.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 } 2>&1 | while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$line"; done | tee -a post.log
