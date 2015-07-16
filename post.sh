@@ -12,8 +12,8 @@ emerge --sync
 
 #Build and switch to clang. Also build some packages with gcc that break with clang.
 mkdir /etc/portage/package.use/
-printf "=sys-devel/clang ~arm\n" >> /etc/portage/package.accept_keywords
-printf "=sys-devel/llvm ~arm\n" >> /etc/portage/package.accept_keywords
+printf "sys-devel/clang ~arm\n" >> /etc/portage/package.accept_keywords
+printf "sys-devel/llvm ~arm\n" >> /etc/portage/package.accept_keywords
 printf "sys-kernel/raspberrypi-sources **\n" >> /etc/portage/package.accept_keywords
 printf "sys-kernel/raspberrypi-firmware **\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
@@ -29,9 +29,10 @@ cd /usr/src/linux
 mv /.config .
 cpucores=$(grep -c ^processor /proc/cpuinfo)
 make -j${cpucores}
-make modules_install
-make install
-cp /usr/src/linux/arch/arm/boot/zImage /boot/kernel7.img
+make modules
+#make modules_install
+#make install
+#cp /usr/src/linux/arch/arm/boot/zImage /boot/kernel7.img
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
 eselect profile set 12
