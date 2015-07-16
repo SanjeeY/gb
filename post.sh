@@ -14,16 +14,16 @@ emerge --sync
 
 #Build and switch to clang. Also build some packages with gcc that break with clang.
 mkdir /etc/portage/package.use/
-printf "sys-devel/clang ~arm\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm ~arm\n" >> /etc/portage/package.accept_keywords
+printf "sys-devel/clang ~arm\n" >> /etc/portage/package.accept_keywords
 printf "app-arch/p7zip ~arm\n" >> /etc/portage/package.accept_keywords
 printf "sys-kernel/raspberrypi-sources **\n" >> /etc/portage/package.accept_keywords
-printf "sys-kernel/raspberrypi-firmware ~arm\n" >> /etc/portage/package.accept_keywords
+printf "sys-boot/raspberrypi-firmware ~arm\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 printf "dev-python/py -test\n" >> /etc/portage/package.use/llvm
 printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
 printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
-emerge clang guile autogen ntp
+emerge llvm clang guile autogen ntp
 export CC=clang
 export CXX=clang++
 
