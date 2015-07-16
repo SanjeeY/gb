@@ -1,4 +1,5 @@
 #!/bin/bash
+{
 scriptdir=$(pwd)
 
 #Create working directory
@@ -59,5 +60,6 @@ cp -R ${scriptdir}/buildScripts .
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
+} 2>&1 | tee -a gscript.log
 v=$(date +%Y%m%d%H%M)
 cp /mnt/gentoo/backup/backup.tar.xz /mnt/storage/gbuild.${v}.tar.xz

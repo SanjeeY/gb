@@ -1,4 +1,5 @@
 #!/bin/bash
+{
 source /etc/profile
 env-update
 
@@ -48,3 +49,4 @@ etc-update --automode -3
 mkdir /backup
 XZ_OPT=-9 tar -cvpJf /backup/backup.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 exit
+} 2>&1 | tee -a post.log
