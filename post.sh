@@ -9,7 +9,10 @@ emerge --sync
 
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
-
+ln -s /usr/share/zoneinfo/US/Eastern /etc/localtime
+sed -i s/#en/en/g /etc/locale.gen
+locale-gen
+eselect locale set 4
 
 #Build and switch to clang. Also build some packages with gcc that break with clang.
 printf "sys-devel/clang ~amd64\n" >> /etc/portage/package.accept_keywords
@@ -84,7 +87,7 @@ XZ_OPT=-9 tar -cvpJf /backup/backup.cinnamon.tar.xz --directory=/ --exclude=proc
 
 systemctl enable ntpd
 exit
-} 2>&1 |while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$line"; done| tee -a post.log
+} 2>&1 | while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$line"; done | tee -a post.log
 
 #while IFS= read -r line;
 #do

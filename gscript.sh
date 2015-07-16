@@ -1,5 +1,4 @@
 #!/bin/bash
-{
 scriptdir=$(pwd)
 
 #Create working directory
@@ -64,4 +63,3 @@ v=$(date +%Y%m%d%H%M)
 cp /mnt/gentoo/backup/backup.tar.xz /mnt/storage/gbuild.${v}.tar.xz
 cp /mnt/gentoo/backup/backup.xorg-server.tar.xz /mnt/storage/gbuild.xorg-server.${v}.tar.xz
 cp /mnt/gentoo/backup/backup.cinnamon.tar.xz /mnt/storage/gbuild.cinnamon.${v}.tar.xz
-} 2>&1 | while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$line"; done | tee -a gscript.log
