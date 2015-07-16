@@ -7,7 +7,7 @@ printf "Only a three partition boot, swap, and root partition is supported at th
 mkdir /mnt/gentoo
 mkdir /workgen
 rootPart=workgen
-mount /dev/$rootPart /mnt/gentoo
+mount /$rootPart /mnt/gentoo
 mkdir /mnt/gentoo/boot
 bootPart=mmcblk0p5
 #mkfs.ext2 /dev/$bootPart
