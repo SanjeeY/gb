@@ -5,9 +5,6 @@ printf "The kernel config provided supports most filesystems(Ext4, XFS, Reiser4.
 printf "Only a three partition boot, swap, and root partition is supported at this time.\n"
 #Read and mount partitions
 mkdir /mnt/gentoo
-mkdir /workgen
-rootPart=workgen
-mount /$rootPart /mnt/gentoo
 mkdir /mnt/gentoo/boot
 bootPart=mmcblk0p5
 #mkfs.ext2 /dev/$bootPart
