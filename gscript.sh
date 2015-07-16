@@ -1,14 +1,11 @@
 #!/bin/bash
 scriptdir=$(pwd)
-printf "Please create your partitions prior to installation.\n"
-printf "The kernel config provided supports most filesystems(Ext4, XFS, Reiser4. F2FS),\n so root partiton can be formatted based on livecd disk utilities.\n"
-printf "Only a three partition boot, swap, and root partition is supported at this time.\n"
-#Read and mount partitions
+
+#Create working directory
+rm -rf /mnt/gentoo
 mkdir /mnt/gentoo
 mkdir /mnt/gentoo/boot
-bootPart=mmcblk0p5
-#mkfs.ext2 /dev/$bootPart
-mount /dev/$bootPart /mnt/gentoo/boot
+
 #Generate random seed for mirror selection
 numMirrors=$(wc -l < mirrors)
 mirrorSeed=$((($(date +%s)%${numMirrors})+1))
@@ -16,10 +13,10 @@ mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 #Download and extract stage3 and portage files.
 cd /mnt/gentoo/
-wget ${mirror}releases/arm/autobuilds/latest-stage3-armv7a.txt
-version=$(sed -n -e 3p latest-stage3-armv7a.txt | grep -o '^\S*' |  cut -d \/ -f 1)
+wget ${mirror}releases/arm/autobuilds/latest-stage3-amd64.txt
+version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 1)
 rm latest-stage3-armv7a.txt
-wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a/stage3-armv7a-${version}.tar.bz2
+wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
 wget ${mirror}/snapshots/portage-latest.tar.xz
 tar xvjpf stage3*.tar.bz2
 rm stage3*
@@ -57,3 +54,6 @@ cp -R ${scriptdir}/boot boot
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
+v=date +%Y%m%d%H%M
+cp /mnt/gentoo/backup/backup.tar.7z /mnt/storage/gbuild.${v}.tar.7z
+./gscript.sh
