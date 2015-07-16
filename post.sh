@@ -49,4 +49,4 @@ etc-update --automode -3
 mkdir /backup
 XZ_OPT=-9 tar -cvpJf /backup/backup.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 exit
-} 2>&1 | tee -a post.log
+} 2>&1 | python -c 'import sys,time;sys.stdout.write("".join(( " ".join((time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), line)) for line in sys.stdin )))' | tee -a post.log
