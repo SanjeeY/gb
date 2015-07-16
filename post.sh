@@ -1,6 +1,5 @@
 #!/bin/bash
 {
-exec 3>&1 1>>/var/log/gbuild.log 2>&1
 source /etc/profile
 env-update
 
@@ -9,11 +8,8 @@ rm portage*
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 
-#Sync portage tree
-emerge --sync
-
 #Build and switch to clang. Also build some packages with gcc that break with clang.
-mkdir /etc/portage/package.use/
+USE="-test" emerge py
 printf "sys-devel/llvm ~arm\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/clang ~arm\n" >> /etc/portage/package.accept_keywords
 printf "app-arch/p7zip ~arm\n" >> /etc/portage/package.accept_keywords
