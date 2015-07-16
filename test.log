@@ -1,0 +1,4 @@
+Please create your partitions prior to installation.
+The kernel config provided supports most filesystems(Ext4, XFS, Reiser4. F2FS),
+ so root partiton can be formatted based on livecd disk utilities.
+Only a three partition boot, swap, and root partition is supported at this time.
