@@ -44,7 +44,6 @@ cp ${scriptdir}/make.conf etc/portage/make.conf
 printf "MAKEOPTS=\"-j${cpucores}\"\n" >> etc/portage/make.conf
 cp -L /etc/resolv.conf etc
 
-
 #Mount necessary filesystems before chroot
 mount -t proc proc proc
 mount --rbind /sys sys
@@ -57,7 +56,6 @@ cp ${scriptdir}/.config .
 cp ${scriptdir}/wpa_supplicant.conf .
 cp ${scriptdir}/post.sh .
 cp -R ${scriptdir}/buildScripts .
-cp -R ${scriptdir}/boot boot
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
