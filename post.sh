@@ -52,7 +52,7 @@ emerge -uDN @world wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect g
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
 systemctl enable dhcpcd
-
+systemctl enable ntpd
 
 #Update config files
 etc-update --automode -3
@@ -68,26 +68,25 @@ printf "[F1] Archiving installation"
 printf "======================================================================="
 XZ_OPT=-9 tar -cvpJf /backup/backup.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 
-#printf "[4] Building xorg-server"
-#printf "======================================================================="
-#./buildScripts/xorg.sh
+printf "[4] Building xorg-server"
+printf "======================================================================="
+./buildScripts/xorg.sh
 
 printf "[F2] Archiving installation"
 printf "======================================================================="
 XZ_OPT=-9 tar -cvpJf /backup/backup.xorg-server.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 
 
-#printf "[5] Building Cinnamon"
-#printf "======================================================================="
-#./buildScripts/buildCinnamon.sh
+printf "[5] Building Cinnamon"
+printf "======================================================================="
+./buildScripts/buildCinnamon.sh
 
 printf "[F3] Archiving installation"
 printf "======================================================================="
 XZ_OPT=-9 tar -cvpJf /backup/backup.cinnamon.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 
-systemctl enable ntpd
 exit
-} 2>&1 | while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$line"; done | tee -a post.log
+} 2>&1 | tee -a post.log
 
 #while IFS= read -r line;
 #do
