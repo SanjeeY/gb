@@ -26,6 +26,13 @@ tar xfv portage-latest.tar.xz
 rm portage-latest.tar.xz
 cd ..
 
+
+#Edit fstab
+sed -i -e 's/BOOT/sda1/g' etc/fstab
+sed -i -e 's/SWAP/sda2/g' etc/fstab
+sed -i -e 's/ROOT/sda3/g' etc/fstab
+
+
 #Update various configuration files in /etc
 printf "\nGENTOO_MIRRORS=\"" >> etc/portage/make.conf
 printf $mirror >> etc/portage/make.conf
