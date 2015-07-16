@@ -17,10 +17,10 @@ mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 #Download and extract stage3 and portage files.
 cd /mnt/gentoo/
-wget ${mirror}releases/arm/autobuilds/latest-stage3-armv7a.txt
-version=$(sed -n -e 3p latest-stage3-armv7a.txt | grep -o '^\S*' |  cut -d \/ -f 1)
-rm latest-stage3-armv7a.txt
-wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a/stage3-armv7a-${version}.tar.bz2
+wget ${mirror}releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt
+version=$(sed -n -e 3p latest-stage3-armv7a_hardfp.txt | grep -o '^\S*' |  cut -d \/ -f 1)
+rm latest-stage3-armv7a_hardfp.txt
+wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2
 wget ${mirror}/snapshots/portage-latest.tar.xz
 tar xvjpf stage3*.tar.bz2
 rm stage3*
