@@ -1,8 +1,8 @@
-http://www.gtlib.gatech.edu/pub/gentoo
-ftp://ftp.gtlib.gatech.edu/pub/gentoo
+http://www.gtlib.gatech.edu/pub/gentoo/
+ftp://ftp.gtlib.gatech.edu/pub/gentoo/
 http://lug.mtu.edu/gentoo/
 ftp://lug.mtu.edu/gentoo/
-http://gentoo.netnitco.net
+http://gentoo.netnitco.net/
 http://gentoo.osuosl.org/
 http://gentoo.mirrors.pair.com/
 ftp://gentoo.mirrors.pair.com/
@@ -10,7 +10,7 @@ ftp://mirrors.rit.edu/gentoo/
 http://mirrors.rit.edu/gentoo/
 ftp://mirror.iawnet.sandia.gov/pub/gentoo/
 http://mirror.iawnet.sandia.gov/gentoo/
-http://gentoo.mirrors.tds.net/gentoo
+http://gentoo.mirrors.tds.net/gentoo/
 http://ftp.ucsb.edu/pub/mirrors/linux/gentoo/
 ftp://ftp.ucsb.edu/pub/mirrors/linux/gentoo/
 http://mirror.lug.udel.edu/pub/gentoo/
