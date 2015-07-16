@@ -3,6 +3,8 @@
 source /etc/profile
 env-update
 
+
+mkdir /run/shm
 mkdir /mnt/gentoo/backup/
 XZ_OPT=-9 tar -cvpJf /backup/pigenIMG.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 

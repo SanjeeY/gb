@@ -52,7 +52,10 @@ then
   mount --make-rslave sys
   mount --rbind /dev dev
   mount --make-rslave dev
-
+  rm /dev/shm && mkdir /dev/shm
+  mount -t tmpfs -o nosuid,nodev,noexec shm /dev/shm
+  chmod 1777 /dev/shm
+  
   #Copy kernel config, wifi config, post-chroot script, and other post-installation build scripts
   cp ${scriptdir}/.config .
   cp ${scriptdir}/wpa_supplicant.conf .
