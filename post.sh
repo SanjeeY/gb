@@ -2,8 +2,6 @@
 source /etc/profile
 env-update
 
-#*Remove some accidentally created files (easier than debugging for now)
-rm portage*
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 
@@ -44,9 +42,11 @@ systemctl enable ntpd
 #Update config files
 etc-update --automode -3
 
+./buildScripts/xorg.sh
+./buildScripts/buildCinnamon.sh
+
 #Root password prompt
-printf "\nPlease enter root password:\n"
-passwd
+./setp.sh
 mkdir /backup
 tar -cvpf /backup/backup.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 7z a -mx9 /backup/backup.tar.7z /backup/backup.tar
