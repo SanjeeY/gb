@@ -5,24 +5,13 @@ printf "The kernel config provided supports most filesystems(Ext4, XFS, Reiser4.
 printf "Only a three partition boot, swap, and root partition is supported at this time.\n"
 #Read and mount partitions
 mkdir /mnt/gentoo
-printf "\n\nEnter root partition device(e.g. sda3)\n"
-read rootPart
-mkfs.ext4 /dev/$rootPart
+mkdir /workgen
+rootPart=workgen
 mount /dev/$rootPart /mnt/gentoo
 mkdir /mnt/gentoo/boot
-printf "\n\nEnter boot partition device(e.g. sda1)\nMust be ext2 for BIOS, vfat for UEFI installations\n"
-read bootPart
-mkfs.ext2 /dev/$bootPart
+bootPart=mmcblk0p5
+#mkfs.ext2 /dev/$bootPart
 mount /dev/$bootPart /mnt/gentoo/boot
-printf "\n\nWill there be a swap partition(y/n)?\n"
-read swapBool
-if [ "$swapBool" == "y" ]
-then
-  printf "\nEnter swap partition device (eg: sda2)\n"
-  read swapPart
-  swapon /dev/$swapPart
-fi
-
 #Generate random seed for mirror selection
 numMirrors=$(wc -l < mirrors)
 mirrorSeed=$((($(date +%s)%${numMirrors})+1))
@@ -30,7 +19,7 @@ mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 #Download and extract stage3 and portage files.
 cd /mnt/gentoo/
-wget -rnd -l1 ${mirror}releases/amd64/autobuilds/current-stage3-amd64/ -A "stage3-amd64-20*.tar.bz2" -e robots=off
+wget -rnd -l1 ${mirror}releases/arm/autobuilds/current-stage3-armv7a/ -A "stage3-armv7a-20*.tar.bz2" -e robots=off
 wget ${mirror}/snapshots/portage-latest.tar.xz
 tar xvjpf stage3*.tar.bz2 --xattrs
 rm stage3*
@@ -44,14 +33,8 @@ cd ..
 printf "\nGENTOO_MIRRORS=\"" >> etc/portage/make.conf
 printf $mirror >> etc/portage/make.conf
 printf "\"\n" >> etc/portage/make.conf
-sed -i -e "s/BOOT/${bootPart}/g" etc/fstab
-if [ "$swapBool" == "y" ]
-then
-  sed -i -e "s/SWAP/${swapPart}/g" etc/fstab
-else
-  sed -i "/SWAP/d" etc/fstab
-fi
-sed -i -e "s/ROOT/${rootPart}/g" etc/fstab
+
+#Determine number of CPU cores + add to make.conf
 cpucores=$(grep -c ^processor /proc/cpuinfo)
 cp ${scriptdir}/make.conf etc/portage/make.conf
 printf "MAKEOPTS=\"-j${cpucores}\"\n" >> etc/portage/make.conf
@@ -70,6 +53,7 @@ cp ${scriptdir}/.config .
 cp ${scriptdir}/wpa_supplicant.conf .
 cp ${scriptdir}/post.sh .
 cp -R ${scriptdir}/buildScripts .
+cp -R ${scriptdir}/boot boot
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
