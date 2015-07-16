@@ -1,11 +1,11 @@
 #!/bin/bash
-startH=$(date '+%-H')
-startM=$(date '+%-M')
-startS=$(date '+%-S')
+#startH=$(date '+%-H')
+#startM=$(date '+%-M')
+#startS=$(date '+%-S')
 {
 source /etc/profile
 env-update
-emerge--sync
+emerge --sync
 
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
@@ -84,14 +84,14 @@ XZ_OPT=-9 tar -cvpJf /backup/backup.cinnamon.tar.xz --directory=/ --exclude=proc
 
 systemctl enable ntpd
 exit
-} 2>&1 |
-while IFS= read -r line;
-do
-newH=$(date '+%-H')
-newM=$(date '+%-M')
-newS=$(date '+%-S')
-fH=$((newH-startH))
-fM=$((newM-startM))
-fS=$((newS-startS))
-printf  "\[$fH\:$fM\:$fS\]  $line";
-done | tee -a post.log
+} 2>&1 |while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$line"; done| tee -a post.log
+
+#while IFS= read -r line;
+#do
+#newH=$(date '+%-H')
+#newM=$(date '+%-M')
+#newS=$(date '+%-S')
+#fH=$((newH-startH))
+#fM=$((newM-startM))
+#fS=$((newS-startS))
+#done
