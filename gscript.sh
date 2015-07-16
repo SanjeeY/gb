@@ -63,3 +63,5 @@ chroot /mnt/gentoo ./post.sh
 } 2>&1 | python -c 'import sys,time;sys.stdout.write("".join(( " ".join((time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), line)) for line in sys.stdin )))' | tee -a gscript.log
 v=$(date +%Y%m%d%H%M)
 cp /mnt/gentoo/backup/backup.tar.xz /mnt/storage/gbuild.${v}.tar.xz
+cp /mnt/gentoo/backup/backup.xorg-server.tar.xz /mnt/storage/gbuild.xorg-server.${v}.tar.xz
+cp /mnt/gentoo/backup/backup.cinnamon.tar.xz /mnt/storage/gbuild.cinnamon.${v}.tar.xz
