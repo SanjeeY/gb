@@ -5,8 +5,6 @@ env-update
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 
-#Sync portage tree
-emerge --sync
 
 #Build and switch to clang. Also build some packages with gcc that break with clang.
 printf "sys-devel/clang ~amd64\n" >> /etc/portage/package.accept_keywords
@@ -20,7 +18,7 @@ export CC=clang
 export CXX=clang++
 
 #Download and build kernel. Uses included kernel config file from git.
-emerge gentoo-sources
+emerge gentoo-sources linux-firmware
 cd /usr/src/linux
 mv /.config .
 cpucores=$(grep -c ^processor /proc/cpuinfo)
@@ -48,7 +46,5 @@ etc-update --automode -3
 #Root password prompt
 ./setp.sh
 mkdir /backup
-tar -cvpf /backup/backup.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
-7z a -mx9 /backup/backup.tar.7z /backup/backup.tar
-rm /backup/backup.tar
+XZ_OPT=-9 tar -cvpJf /backup/backup.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 exit

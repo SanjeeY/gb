@@ -60,4 +60,4 @@ cp -R ${scriptdir}/buildScripts .
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
 v=$(date +%Y%m%d%H%M)
-cp /mnt/gentoo/backup/backup.tar.7z /mnt/storage/gbuild.${v}.tar.7z
+cp /mnt/gentoo/backup/backup.tar.xz /mnt/storage/gbuild.${v}.tar.xz
