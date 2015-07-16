@@ -1,10 +1,16 @@
 #!/bin/bash
 scriptdir=$(pwd)
-
+printf "==========================================================================================\n"
+printf "Replace configuration files in the root folder(such as kernel config, fstab, or make.conf)\n
+Warning: Editing the USE variable in make.conf may cause autobuild to fail.\n"
+printf "==========================================================================================\n"
+printf "Type 'y' to start"
+read start
+if [ "$start" == "y" ]
+then
 #Create working directory
-rm -rf /mnt/gentoo
-mkdir /mnt/gentoo
-mkdir /mnt/gentoo/boot
+rm -rf /var/tmp/gentoo
+mkdir -p /var/tmp/gentoo/boot
 
 #Generate random seed for mirror selection
 numMirrors=$(wc -l < mirrors)
@@ -12,7 +18,7 @@ mirrorSeed=$((($(date +%s)%${numMirrors})+1))
 mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 #Download and extract stage3 and portage files.
-cd /mnt/gentoo/
+cd /var/tmp/gentoo/
 wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64.txt
 version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 1)
 wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
@@ -63,3 +69,4 @@ v=$(date +%Y%m%d%H%M)
 cp /mnt/gentoo/backup/backup.tar.xz /mnt/storage/gbuild.${v}.tar.xz
 cp /mnt/gentoo/backup/backup.xorg-server.tar.xz /mnt/storage/gbuild.xorg-server.${v}.tar.xz
 cp /mnt/gentoo/backup/backup.cinnamon.tar.xz /mnt/storage/gbuild.cinnamon.${v}.tar.xz
+fi
