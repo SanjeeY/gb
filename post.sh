@@ -31,7 +31,7 @@ make install
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
 eselect profile set 12
-emerge -uDN @world wpa_supplicant dhcpcd wireless-tools p7zip dev-perl/expect
+emerge -uDN @world wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect
 
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd

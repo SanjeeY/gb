@@ -12,7 +12,7 @@ printf "sys-libs/zlib minizip\n" >> /etc/portage/package.use/zlib
 printf "x11-drivers/xf86-video-r128\n" >> /etc/portage/package.unmask
 export CC=clang
 export CXX=clang++
-emerge libXxf libdrm libXdamage libXxf86vm xinit qtgui
+emerge libdrm libXdamage libXxf86vm xinit qtgui
 export CC=gcc
 export CXX=g++
 emerge xorg-server mesa boost boost-build ffmpeg vlc x11-libs/cairo libev recode pixman libaacplus poppler cmake
