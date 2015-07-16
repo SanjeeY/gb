@@ -80,4 +80,4 @@ XZ_OPT=-9 tar -cvpJf /backup/backup.cinnamon.tar.xz --directory=/ --exclude=proc
 
 
 exit
-} 2>&1 | python -c 'import sys,time;sys.stdout.write("".join(( " ".join((time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), line)) for line in sys.stdin )))' | tee -a post.log
+} 2>&1 | while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$line"; done | tee -a post.log
