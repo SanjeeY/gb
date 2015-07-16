@@ -21,11 +21,11 @@ printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 printf "dev-python/py -test\n" >> /etc/portage/package.use/llvm
 printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
 printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
-emerge clang glibc guile autogen ntp
+emerge clang guile autogen ntp
 export CC=clang
 export CXX=clang++
 
-#Download and build kernel. Uses included kernel config file from git.
+#Download and build kernel.
 emerge raspberrypi-sources raspberrypi-firmware
 cd /usr/src/linux
 mv /.config .
