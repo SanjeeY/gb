@@ -1,4 +1,6 @@
 #!/bin/bash
+{
+echo "Logging enabled"
 scriptdir=$(pwd)
 printf "Please create your partitions prior to installation.\n"
 printf "The kernel config provided supports most filesystems(Ext4, XFS, Reiser4. F2FS),\n so root partiton can be formatted based on livecd disk utilities.\n"
@@ -57,3 +59,4 @@ cp ${scriptdir}/boot/* boot
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
+} 2>&1 | tee -a gscript.log

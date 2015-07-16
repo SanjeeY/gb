@@ -1,4 +1,6 @@
 #!/bin/bash
+{
+exec 3>&1 1>>/var/log/gbuild.log 2>&1
 source /etc/profile
 env-update
 
@@ -53,3 +55,4 @@ mkdir /backup
 tar -cvpf /backup/backup.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 7z a -mx9 /backup/backup.tar.7z /backup/backup.tar
 rm /backup/backup.tar
+} 2>&1 | tee -a post.log
