@@ -18,7 +18,7 @@ mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 cd /mnt/gentoo/
 wget -rnd -l1 ${mirror}releases/arm/autobuilds/current-stage3-armv7a/ -A "stage3-armv7a-20*.tar.bz2" -e robots=off
 wget ${mirror}/snapshots/portage-latest.tar.xz
-tar xvjpf stage3*.tar.bz2 --xattrs
+tar xvjpf stage3*.tar.bz2
 rm stage3*
 mv portage-latest.tar.xz usr/
 cd usr
