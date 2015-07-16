@@ -38,7 +38,7 @@ make modules
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
 eselect profile set 12
-emerge -uDN @world wpa_supplicant dhcpcd wireless-tools p7zip
+emerge -uDN @world wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect
 
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
@@ -48,9 +48,7 @@ systemctl enable ntpd
 #Update config files
 etc-update --automode -3
 
-#Root password prompt
-printf "\nPlease enter root password:\n"
-passwd
+./setp.sh root
 mkdir /backup
 tar -cvpf /backup/backup.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 7z a -mx9 /backup/backup.tar.7z /backup/backup.tar

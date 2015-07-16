@@ -6,9 +6,9 @@ printf "Only a three partition boot, swap, and root partition is supported at th
 #Read and mount partitions
 mkdir /mnt/gentoo
 mkdir /mnt/gentoo/boot
-bootPart=mmcblk0p5
+#bootPart=mmcblk0p5
 #mkfs.ext2 /dev/$bootPart
-mount /dev/$bootPart /mnt/gentoo/boot
+#mount /dev/$bootPart /mnt/gentoo/boot
 #Generate random seed for mirror selection
 numMirrors=$(wc -l < mirrors)
 mirrorSeed=$((($(date +%s)%${numMirrors})+1))
@@ -53,7 +53,7 @@ cp ${scriptdir}/.config .
 cp ${scriptdir}/wpa_supplicant.conf .
 cp ${scriptdir}/post.sh .
 cp -R ${scriptdir}/buildScripts .
-cp -R ${scriptdir}/boot boot
+cp ${scriptdir}/boot/* boot
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
