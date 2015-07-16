@@ -3,6 +3,10 @@
 source /etc/profile
 env-update
 
+mkdir /mnt/gentoo/backup/
+XZ_OPT=-9 tar -cvpJf /backup/pigenIMG.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
+
+
 #*Remove some accidentally created files (easier than debugging for now)
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
