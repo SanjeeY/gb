@@ -60,7 +60,7 @@ cp -R ${scriptdir}/buildScripts .
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
-} 2>&1 | python -c 'import sys,time;sys.stdout.write("".join(( " ".join((time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), line)) for line in sys.stdin )))' | tee -a gscript.log
+} 2>&1 | while IFS= read -r line; do printf '[%s] %s\n' "$(date '+%H:%M:%S')" "$line"; done | tee -a gscript.log
 v=$(date +%Y%m%d%H%M)
 cp /mnt/gentoo/backup/backup.tar.xz /mnt/storage/gbuild.${v}.tar.xz
 cp /mnt/gentoo/backup/backup.xorg-server.tar.xz /mnt/storage/gbuild.xorg-server.${v}.tar.xz
