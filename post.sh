@@ -1,7 +1,7 @@
 #!/bin/bash
-startH=$(date '+%H')
-startM=$(date '+%M')
-startS=$(date '+%S')
+startH=$(date '+%-H')
+startM=$(date '+%-M')
+startS=$(date '+%-S')
 {
 source /etc/profile
 env-update
@@ -87,9 +87,9 @@ exit
 } 2>&1 |
 while IFS= read -r line;
 do
-newH=$(date '+%H')
-newM=$(date '+%M')
-newS=$(date '+%S')
+newH=$(date '+%-H')
+newM=$(date '+%-M')
+newS=$(date '+%-S')
 fH=$((newH-startH))
 fM=$((newM-startM))
 fS=$((newS-startS))
