@@ -17,13 +17,14 @@ eselect locale set 4
 #Build and switch to clang. Also build some packages with gcc that break with clang.
 printf "sys-devel/clang ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "sys-devel/gcc **\n" >> /etc/portage/package.accept_keywords
 printf "sys-kernel/gentoo-sources ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "sys-devel/llvm clang\n" >> /etc/portage/package.use/llvm
 printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
 printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
 printf "[1.] Building LLVM & Clang\n"
 printf "======================================================================="
-emerge clang guile autogen ntp
+emerge clang guile cmake autogen ntp grub wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect boost boost-build =sys-devel/gcc-5.2.0
 export CC=clang
 export CXX=clang++
 
@@ -49,7 +50,7 @@ printf "======================================================================="
 eselect profile set 12
 emerge -C udev
 emerge systemd
-emerge -uDN @world wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect grub
+emerge -uDN @world
 
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
@@ -60,7 +61,10 @@ systemctl enable ntpd
 etc-update --automode -3
 
 
-
+#Final update in case clang did not build correctly
+export CC=gcc
+export CXX=g++
+emerge -uvDN @world
 
 #Root password prompt
 ./setp.sh
