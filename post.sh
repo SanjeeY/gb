@@ -24,9 +24,9 @@ printf "media-libs/harfbuzz icu\n" >> /etc/portage/package.use/llvm
 printf "sys-apps/systemd gudev\n" >> /etc/portage/package.use/llvm
 printf "[1.] Building LLVM & Clang\n"
 printf "======================================================================="
-emerge clang guile cmake autogen ntp grub wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect boost boost-build =sys-devel/gcc-5.2.0
-export CC=clang
-export CXX=clang++
+emerge =sys-devel/gcc-5.2.0
+gcc-config 2
+emerge guile cmake autogen
 
 #Download and build kernel. Uses included kernel config file from git.
 printf "[2.] Building kernel [clang enabled]"
@@ -50,7 +50,7 @@ printf "======================================================================="
 eselect profile set 12
 emerge -C udev
 emerge systemd
-emerge -uDN @world
+emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect
 
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
@@ -61,13 +61,10 @@ systemctl enable ntpd
 etc-update --automode -3
 
 
-#Final update in case clang did not build correctly
-export CC=gcc
-export CXX=g++
-emerge -uvDN @world
+emerge --depclean
 
-#Root password prompt
-./setp.sh
+grub2-install --target=i386-pc /dev/sda
+grub2-mkconfig -o /boot/grub/grub.cfg
 mkdir /backup
 
 printf "[F1.] Archiving installation"
