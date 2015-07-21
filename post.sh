@@ -19,9 +19,9 @@ printf "======================================================================="
 
 emerge gentoo-sources linux-firmware
 cd /usr/src/linux
-openssl req -new -nodes -utf8 -sha512 -days 36500 -batch -x509 -config /buildScripts/x509.genkey -outform DER -out signing_key.x509 -keyout signing_key.priv
 cp /.config .
 cpucores=$(grep -c ^processor /proc/cpuinfo)
+make oldconfig
 make -j${cpucores}
 #make modules
 make modules_install
