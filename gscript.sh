@@ -9,6 +9,13 @@ read start
 if [ "$start" == "y" ]
 then
 #Create working directory
+mkfs.ext4 -F /dev/sda3
+mkdir /mnt/gentoo
+mount /dev/sda3 /mnt/gentoo
+mkdir /mnt/gentoo/boot
+mkfs.ext4 -F /dev/sda1
+mount /dev/sda1 /mnt/gentoo/boot
+swapon /dev/sda2
 rm -rf /mnt/gentoo
 mkdir -p /mnt/gentoo/boot
 
