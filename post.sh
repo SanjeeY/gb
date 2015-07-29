@@ -14,7 +14,7 @@ locale-gen
 eselect locale set 4
 
 #Download and build kernel. Uses included kernel config file from git.
-printf "[1.] Building kernel [clang enabled]"
+printf "[1.] Building kernel"
 printf "======================================================================="
 
 emerge gentoo-sources linux-firmware
@@ -44,31 +44,19 @@ etc-update --automode -3
 
 
 emerge --depclean
-
 grub2-install --target=i386-pc /dev/sda
 grub2-mkconfig -o /boot/grub/grub.cfg
 mkdir /backup
+passwd
 
-printf "[F1.] Archiving installation"
-printf "======================================================================="
-XZ_OPT=-9 tar -cvpJf /backup/backup.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 
 printf "[3.] Building xorg-server"
 printf "======================================================================="
 . /buildScripts/xorg.sh
 
-printf "[F2.] Archiving installation"
-printf "======================================================================="
-XZ_OPT=-9 tar -cvpJf /backup/backup.xorg-server.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
-
-
 printf "[4.] Building Cinnamon"
 printf "======================================================================="
 . /buildScripts/buildCinnamon.sh
-
-printf "[F3.] Archiving installation"
-printf "======================================================================="
-XZ_OPT=-9 tar -cvpJf /backup/backup.cinnamon.tar.xz --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backup .
 
 exit
 } 2>&1 | tee -a post.log
