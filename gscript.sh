@@ -29,12 +29,14 @@ wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64.txt
 version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 1)
 wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
 wget ${mirror}snapshots/portage-latest.tar.xz
-tar xvjpf stage3*.tar.bz2
+printf "Extracting stage3..."
+tar xjpf stage3*.tar.bz2
 rm latest-stage3-amd64.txt
 rm stage3*
 mv portage-latest.tar.xz usr/
 cd usr
-tar xfv portage-latest.tar.xz
+printf "Extracting portage..."
+tar xf portage-latest.tar.xz
 rm portage-latest.tar.xz
 cd ..
 
