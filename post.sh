@@ -9,13 +9,13 @@ env-update
 mkdir /etc/wpa_supplicant
 mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 ln -s /usr/share/zoneinfo/US/Eastern /etc/localtime
-sed -i s/#en/en/g /etc/locale.gen
-locale-gen
-eselect locale set 4
+#sed -i s/#en/en/g /etc/locale.gen
+#locale-gen
+#eselect locale set 4
 
 #Download and build kernel. Uses included kernel config file from git.
-printf "[1.] Building kernel"
-printf "======================================================================="
+printf "[1.] Building kernel\n"
+printf "=======================================================================\n"
 
 emerge gentoo-sources linux-firmware
 cd /usr/src/linux
@@ -29,8 +29,8 @@ make install
 #cp /usr/src/linux/arch/arm/boot/zImage /boot/kernel7.img
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
-printf "[2.] Updating world and installing various network utilities"
-printf "======================================================================="
+printf "[2.] Updating world and installing various network utilities\n"
+printf "=======================================================================\n"
 eselect profile set 12
 emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect
 
@@ -50,12 +50,12 @@ mkdir /backup
 passwd
 
 
-printf "[3.] Building xorg-server"
-printf "======================================================================="
+printf "[3.] Building xorg-server\n"
+printf "=======================================================================\n"
 . /buildScripts/xorg.sh
 
-printf "[4.] Building Cinnamon"
-printf "======================================================================="
+printf "[4.] Building Cinnamon\n"
+printf "=======================================================================\n"
 . /buildScripts/buildCinnamon.sh
 
 exit
