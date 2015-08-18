@@ -2,13 +2,10 @@
 #startH=$(date '+%-H')
 #startM=$(date '+%-M')
 #startS=$(date '+%-S')
-{
 source /etc/profile
 env-update
 
-mkdir /etc/wpa_supplicant
-mv wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
-ln -s /usr/share/zoneinfo/US/Eastern /etc/localtime
+#ln -s /usr/share/zoneinfo/US/Eastern /etc/localtime
 #sed -i s/#en/en/g /etc/locale.gen
 #locale-gen
 #eselect locale set 4
@@ -32,12 +29,13 @@ make install
 printf "[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 eselect profile set 12
-emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools p7zip dev-tcltk/expect
-
+emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools
+mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
 systemctl enable dhcpcd
 systemctl enable ntpd
+timedatectl set-timezone US/Eastern
 
 #Update config files
 etc-update --automode -3
@@ -58,9 +56,10 @@ printf "[4.] Building Cinnamon\n"
 printf "=======================================================================\n"
 . /buildScripts/buildCinnamon.sh
 
-exit
-} 2>&1 | tee -a post.log
-
+printf "Gentoo Linux has been installed\n"
+printf "wpa_supplicant.conf in /etc/wpa_supplicant may need to be edited if it\n"
+printf "wasn't modified prior to installation. dhcpcd may need to be run on first\n"
+printf "reboot if ip is not leased on start\n"
 #while IFS= read -r line;
 #do
 #newH=$(date '+%-H')
