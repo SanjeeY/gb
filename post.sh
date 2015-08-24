@@ -48,13 +48,13 @@ mkdir /backup
 passwd
 
 
-printf "[3.] Building xorg-server\n"
-printf "=======================================================================\n"
-. /buildScripts/xorg.sh
+#printf "[3.] Building xorg-server\n"
+#printf "=======================================================================\n"
+#. /buildScripts/xorg.sh
 
-printf "[4.] Building Cinnamon\n"
-printf "=======================================================================\n"
-. /buildScripts/buildCinnamon.sh
+#printf "[4.] Building Cinnamon\n"
+#printf "=======================================================================\n"
+#. /buildScripts/buildCinnamon.sh
 
 printf "Gentoo Linux has been installed\n"
 printf "wpa_supplicant.conf in /etc/wpa_supplicant may need to be edited if it\n"
