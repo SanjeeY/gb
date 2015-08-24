@@ -23,12 +23,32 @@ numMirrors=$(wc -l < mirrors)
 mirrorSeed=$((($(date +%s)%${numMirrors})+1))
 mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
-#Download and extract stage3 and portage files.
 cd /mnt/gentoo/
 wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64.txt
 version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 1)
 wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
+wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2.DIGESTS.asc
 wget ${mirror}snapshots/portage-latest.tar.xz
+
+trustedStageSig=$(awk '/SHA/{getline; print}' stage3-amd64-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
+downloadStageSig=$(sha512sum stage3-amd64-${version}.tar.bz2 | awk '{print $1}')
+#Download and extract stage3 and portage files.
+while [ "$trustedStageSig" != "$downloadStageSig" && "$(md5sum portage-latest.tar.xz)" != "$(grep xz portage-latest.tar.xz.md5sum)" ]
+{
+  mirrorSeed=$((($(date +%s)%${numMirrors})+1))
+  mirror=$(sed -n -e ${mirrorSeed}p mirrors)
+  cd /mnt/gentoo/
+  wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64.txt
+  version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 1)
+  wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
+  wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2.DIGESTS.asc
+  wget ${mirror}snapshots/portage-latest.tar.xz
+
+  trustedStageSig=$(awk '/SHA/{getline; print}' stage3-amd64-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
+  downloadStageSig=$(sha512sum stage3-amd64-${version}.tar.bz2 | awk '{print $1}')
+}
+
+
 printf "Extracting stage3...\n"
 tar xjpf stage3*.tar.bz2
 rm latest-stage3-amd64.txt
