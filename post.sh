@@ -13,7 +13,7 @@ env-update
 #Download and build kernel. Uses included kernel config file from git.
 printf "[1.] Building kernel\n"
 printf "=======================================================================\n"
-
+emerge --sync
 emerge gentoo-sources linux-firmware
 cd /usr/src/linux
 cp /.config .
