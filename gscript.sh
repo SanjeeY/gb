@@ -29,11 +29,13 @@ version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 
 wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
 wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2.DIGESTS.asc
 wget ${mirror}snapshots/portage-latest.tar.xz
+wget ${mirror}snapshots/portage-latest.tar.xz.md5sum
 
 trustedStageSig=$(awk '/SHA/{getline; print}' stage3-amd64-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
 downloadStageSig=$(sha512sum stage3-amd64-${version}.tar.bz2 | awk '{print $1}')
 #Download and extract stage3 and portage files.
-while [ "$trustedStageSig" != "$downloadStageSig" && "$(md5sum portage-latest.tar.xz)" != "$(grep xz portage-latest.tar.xz.md5sum)" ]
+while [ "$trustedStageSig" != "$downloadStageSig" && "$(md5sum portage-latest.tar.xz)" != "$(grep xz portage-latest.tar.xz.md5sum)" ];
+do
 {
   mirrorSeed=$((($(date +%s)%${numMirrors})+1))
   mirror=$(sed -n -e ${mirrorSeed}p mirrors)
@@ -47,7 +49,7 @@ while [ "$trustedStageSig" != "$downloadStageSig" && "$(md5sum portage-latest.ta
   trustedStageSig=$(awk '/SHA/{getline; print}' stage3-amd64-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
   downloadStageSig=$(sha512sum stage3-amd64-${version}.tar.bz2 | awk '{print $1}')
 }
-
+done
 
 printf "Extracting stage3...\n"
 tar xjpf stage3*.tar.bz2
