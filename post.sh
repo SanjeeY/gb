@@ -13,8 +13,8 @@ env-update
 #Download and build kernel. Uses included kernel config file from git.
 printf "[1.] Building kernel\n"
 printf "=======================================================================\n"
-emerge --sync
-emerge hardened-sources linux-firmware
+emerge hardened-sources linux-firmware cpuinfo2cpuflags
+echo cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 cd /usr/src/linux
 cp /.config .
 cpucores=$(grep -c ^processor /proc/cpuinfo)
@@ -29,8 +29,7 @@ make install
 printf "[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 eselect profile set 12
-emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools
-mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
+emerge -uDN @world ntp grub dhcpcd sudo
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
 systemctl enable dhcpcd
@@ -39,13 +38,24 @@ timedatectl set-timezone US/Eastern
 
 #Update config files
 etc-update --automode -3
-
-
 emerge --depclean
 grub2-install --target=i386-pc /dev/sda
-grub2-mkconfig -o /boot/grub/grub.cfg
-mkdir /backup
 passwd
+
+printf "Enter name for new superuser\n"
+read uname
+useradd $uname
+printf "Enter password\n"
+passwd $uname
+
+printf "Please enter a password for the GRUB bootloader\n"
+grub2-mkpasswd-pbkdf2 | tee passwd
+phash=$(awk '{if(NR==3)print $7}' passwd)
+printf "set superusers='$uname'" >> /etc/grub.d/00_header
+printf "password_pbkdf2 $uname $phash" >> /etc/grub.d/00_header
+printf "$uname  ALL=(ALL) ALL" >> /etc/sudoers
+grub2-mkconfig -o /boot/grub/grub.cfg
+rm passwd
 
 
 #printf "[3.] Building xorg-server\n"

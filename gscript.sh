@@ -63,13 +63,13 @@ do
 done
 
 printf "Extracting stage3...\n"
-tar xjpf stage3*.tar.bz2
+tar xvjpf stage3*.tar.bz2
 rm latest-stage3-amd64.txt
 rm stage3*
 mv portage-latest.tar.xz usr/
 cd usr
 printf "Extracting portage...\n"
-tar xf portage-latest.tar.xz
+tar xvf portage-latest.tar.xz
 rm portage-latest.tar.xz
 cd ..
 
@@ -102,7 +102,6 @@ mount --make-rslave dev
 cp ${scriptdir}/.config .
 cp ${scriptdir}/wpa_supplicant.conf .
 cp ${scriptdir}/post.sh .
-cp -R ${scriptdir}/buildScripts .
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
