@@ -14,7 +14,7 @@ env-update
 printf "[1.] Building kernel\n"
 printf "=======================================================================\n"
 emerge hardened-sources linux-firmware cpuinfo2cpuflags
-echo cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
+cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 cd /usr/src/linux
 cp /.config .
 cpucores=$(grep -c ^processor /proc/cpuinfo)
