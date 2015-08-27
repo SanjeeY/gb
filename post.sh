@@ -13,7 +13,6 @@ env-update
 #Download and build kernel. Uses included kernel config file from git.
 printf "[1.] Building kernel\n"
 printf "=======================================================================\n"
-emerge --sync
 emerge gentoo-sources linux-firmware
 cd /usr/src/linux
 cp /.config .
@@ -30,7 +29,9 @@ printf "[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
-emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools
+emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools cryptsetup
+sed -i 's/USE="/USE="cryptsetup /' /etc/portage/make.conf
+emerge -uDN @world
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
@@ -48,6 +49,8 @@ grub2-mkconfig -o /boot/grub/grub.cfg
 mkdir /backup
 passwd
 
+
+emerge --sync
 
 printf "[3.] Building xorg-server\n"
 printf "=======================================================================\n"
