@@ -30,7 +30,9 @@ printf "[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
-emerge -uDN @world ntp grub dhcpcd sudo
+emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools cryptsetup
+sed -i 's/USE="/USE="cryptsetup /' /etc/portage/make.conf
+emerge -uDN @world
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
 systemctl enable dhcpcd
