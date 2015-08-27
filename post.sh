@@ -28,6 +28,7 @@ make install
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
 printf "[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
+printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
 emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
