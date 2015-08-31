@@ -63,7 +63,7 @@ do
 done
 
 printf "Extracting stage3...\n"
-tar xjpf stage3*.tar.bz2
+tar xvjpf stage3*.tar.bz2
 rm latest-stage3-amd64.txt
 rm stage3*
 mv portage-latest.tar.xz usr/
@@ -78,12 +78,13 @@ cd ..
 sed -i -e 's/BOOT/sda1/g' etc/fstab
 sed -i -e 's/SWAP/sda2/g' etc/fstab
 sed -i -e 's/ROOT/sda3/g' etc/fstab
-
+sed -i -e 's/ext2/ext4/g' etc/fstab
+sed -i -e 's/ext3/ext4/g' etc/fstab
 
 #Update various configuration files in /etc
-printf "\nGENTOO_MIRRORS=\"" >> etc/portage/make.conf
-printf $mirror >> etc/portage/make.conf
-printf "\"\n" >> etc/portage/make.conf
+printf "\nGENTOO_MIRRORS=\"" >> ${scriptdir}/make.conf
+printf $mirror >> ${scriptdir}/make.conf
+printf "\"\n" >> ${scriptdir}/make.conf
 
 #Determine number of CPU cores + add to make.conf
 cpucores=$(grep -c ^processor /proc/cpuinfo)
@@ -106,5 +107,5 @@ cp -R ${scriptdir}/buildScripts .
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh
-v=$(date +%Y%m%d%H%M)
+#v=$(date +%Y%m%d%H%M)
 fi
