@@ -9,10 +9,11 @@ read start
 if [ "$start" == "y" ]
 then
 #Create working directory
-mkfs.btrfs -f /dev/sda1
-mkdir -p /mnt/gentoo/boot
+mkfs.btrfs -f /dev/sda4
+mkdir /mnt/gentoo
 mount -o autodefrag,compress=lzo /dev/sda1 /mnt/gentoo
-swapon /dev/sda2
+mkdir /mnt/gentoo/boot
+swapon /dev/sda5
 
 
 #Generate random seed for mirror selection
