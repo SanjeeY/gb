@@ -30,7 +30,7 @@ printf "[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
-emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools cryptsetup
+emerge -uDN @world ntp wpa_supplicant dhcpcd wireless-tools cryptsetup
 sed -i 's/USE="/USE="cryptsetup /' /etc/portage/make.conf
 emerge systemd
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
@@ -45,26 +45,20 @@ etc-update --automode -3
 
 
 emerge --depclean
-grub2-install --target=i386-pc /dev/sda
-grub2-mkconfig -o /boot/grub/grub.cfg
-mkdir /backup
-passwd
-
-
 emerge --sync
 
 printf "[3.] Building xorg-server\n"
 printf "=======================================================================\n"
 . /buildScripts/xorg.sh
 
-printf "[4.] Building Cinnamon\n"
-printf "=======================================================================\n"
-. /buildScripts/buildCinnamon.sh
+passwd
+#printf "[4.] Building Cinnamon\n"
+#printf "=======================================================================\n"
+#. /buildScripts/buildCinnamon.sh
 
 printf "Gentoo Linux has been installed\n"
-printf "wpa_supplicant.conf in /etc/wpa_supplicant may need to be edited if it\n"
-printf "wasn't modified prior to installation. dhcpcd may need to be run on first\n"
-printf "reboot if ip is not leased on start\n"
+printf "wpa_supplicant.conf in /etc/wpa_supplicant/ may need to be configured if it hasn't\n"
+printf "been prior to installation.\n"
 #while IFS= read -r line;
 #do
 #newH=$(date '+%-H')

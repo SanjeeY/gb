@@ -9,12 +9,9 @@ read start
 if [ "$start" == "y" ]
 then
 #Create working directory
-mkfs.ext4 -F /dev/sda1
-mkfs.ext4 -F /dev/sda3
-mkdir /mnt/gentoo/
-mount /dev/sda3 /mnt/gentoo
-mkdir /mnt/gentoo/boot
-mount /dev/sda1 /mnt/gentoo/boot
+mkfs.btrfs -f /dev/sda1
+mkdir -p /mnt/gentoo/boot
+mount -o autodefrag,compress=lzo /dev/sda1 /mnt/gentoo
 swapon /dev/sda2
 
 
@@ -75,11 +72,11 @@ cd ..
 
 
 #Edit fstab
-sed -i -e 's/BOOT/sda1/g' etc/fstab
-sed -i -e 's/SWAP/sda2/g' etc/fstab
-sed -i -e 's/ROOT/sda3/g' etc/fstab
-sed -i -e 's/ext2/ext4/g' etc/fstab
-sed -i -e 's/ext3/ext4/g' etc/fstab
+sed -i -e 's/BOOT/sda1/' etc/fstab
+sed -i -e 's/SWAP/sda2/' etc/fstab
+sed -i -e '/ROOT/d' etc/fstab
+sed -i -e 's/ext2/btrfs/' etc/fstab
+sed -i -e 's/defaults/autodefrag,compress=lzo/' etc/fstab
 
 #Update various configuration files in /etc
 printf "\nGENTOO_MIRRORS=\"" >> ${scriptdir}/make.conf
