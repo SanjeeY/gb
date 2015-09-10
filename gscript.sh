@@ -11,7 +11,7 @@ then
 #Create working directory
 mkfs.btrfs -f /dev/sda4
 mkdir /mnt/gentoo
-mount -o autodefrag,compress=lzo /dev/sda1 /mnt/gentoo
+mount -o autodefrag,compress=lzo /dev/sda4 /mnt/gentoo
 mkdir /mnt/gentoo/boot
 swapon /dev/sda5
 
