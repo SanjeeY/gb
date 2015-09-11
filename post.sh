@@ -47,19 +47,21 @@ etc-update --automode -3
 emerge --depclean
 grub2-install --target=i386-pc /dev/sda
 grub2-mkconfig -o /boot/grub/grub.cfg
-mkdir /backup
-passwd
 
-
-emerge --sync
 
 printf "[3.] Building xorg-server\n"
 printf "=======================================================================\n"
 . /buildScripts/xorg.sh
 
-printf "[4.] Building Cinnamon\n"
-printf "=======================================================================\n"
-. /buildScripts/buildCinnamon.sh
+emerge --autounmask-write gdm
+etc-update --automode -3
+emerge gdm
+emerge --sync
+passwd
+
+#printf "[4.] Building Cinnamon\n"
+#printf "=======================================================================\n"
+#. /buildScripts/buildCinnamon.sh
 
 printf "Gentoo Linux has been installed\n"
 printf "wpa_supplicant.conf in /etc/wpa_supplicant may need to be edited if it\n"

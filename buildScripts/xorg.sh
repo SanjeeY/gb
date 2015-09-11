@@ -12,4 +12,4 @@ printf "x11-libs/libdrm libkms\n" >> /etc/portage/package.use/mesa
 printf "x11-libs/cairo opengl\n" >> /etc/portage/package.use/mesa
 printf "sys-libs/zlib minizip\n" >> /etc/portage/package.use/zlib
 printf "x11-drivers/xf86-video-r128\n" >> /etc/portage/package.unmask
-emerge xorg-server mesa x11-libs/cairo libev pixman xterm twm xf86-video-virtualbox libdrm libXdamage libXxf86vm xinit qtgui ffmpeg vlc recode libaacplus poppler app-crypt/gnupg
+emerge xorg-server
