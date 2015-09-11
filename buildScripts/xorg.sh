@@ -7,7 +7,7 @@ printf "x11-proto/glproto ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "x11-base/xorg-drivers ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "x11-base/xorg-server ~amd64\n" >> /etc/portage/package.accept_keywords
 printf "media-libs/mesa -vaapi xa\n" >> /etc/portage/package.use/mesa
-printf "x11-apps/mesa-progs -egl -gles2\n" >> /etc/portage/package.use/mesa
+printf "x11-apps/mesa-progs -gles2\n" >> /etc/portage/package.use/mesa
 printf "x11-libs/libdrm libkms\n" >> /etc/portage/package.use/mesa
 printf "x11-libs/cairo opengl\n" >> /etc/portage/package.use/mesa
 printf "sys-libs/zlib minizip\n" >> /etc/portage/package.use/zlib
