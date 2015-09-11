@@ -11,9 +11,9 @@ env-update
 #eselect locale set 4
 
 #Download and build kernel. Uses included kernel config file from git.
-printf "[1.] Building kernel\n"
+printf "\n\n[1.] Building kernel\n"
 printf "=======================================================================\n"
-printf "=sys-kernel/gentoo-sources-4.2.0-r1 ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "=sys-kernel/gentoo-sources-4.2.0-r1 ~arm\n" >> /etc/portage/package.accept_keywords
 emerge =sys-kernel/gentoo-sources-4.2.0-r1 linux-firmware cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 cd /usr/src/linux
@@ -27,13 +27,11 @@ make install
 #cp /usr/src/linux/arch/arm/boot/zImage /boot/kernel7.img
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
-printf "[2.] Updating world and installing various network utilities\n"
+printf "\n\n[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
 emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools cryptsetup
-sed -i 's/USE="/USE="cryptsetup /' /etc/portage/make.conf
-emerge systemd
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
@@ -50,19 +48,19 @@ grub2-install --target=i386-pc /dev/sda
 grub2-mkconfig -o /boot/grub/grub.cfg
 
 
-printf "[3.] Building xorg-server\n"
-printf "=======================================================================\n"
-. /buildScripts/xorg.sh
-emerge gdm gnome-terminal gnome
+#printf "\n\n[3.] Building xorg-server\n"
+#printf "=======================================================================\n"
+#. /buildScripts/xorg.sh
+#emerge gdm gnome-terminal gnome
 emerge --sync
-systemctl enable gdm
+#systemctl enable gdm
 passwd
 
 #printf "[4.] Building Cinnamon\n"
 #printf "=======================================================================\n"
 #. /buildScripts/buildCinnamon.sh
 
-printf "Gentoo Linux has been installed\n"
+printf "\n\n\nGentoo Linux has been installed\n"
 printf "wpa_supplicant.conf in /etc/wpa_supplicant may need to be edited if it\n"
 printf "wasn't modified prior to installation. dhcpcd may need to be run on first\n"
 printf "reboot if ip is not leased on start\n"

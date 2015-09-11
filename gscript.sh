@@ -9,8 +9,8 @@ read start
 if [ "$start" == "y" ]
 then
 #Create working directory
-mkfs.ext4 -F /dev/sda1
-mkfs.ext4 -F /dev/sda3
+mkfs.ext4 -F /dev/mmcblk0p5
+mkfs.ext4 -F /dev/mmcblk0p6
 mkdir /mnt/gentoo/
 mount /dev/sda3 /mnt/gentoo
 mkdir /mnt/gentoo/boot
@@ -26,16 +26,16 @@ mirrorSeed=$((($(date +%s)%${numMirrors})+1))
 mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 
-wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64.txt
-version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 1)
-wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
-wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2.DIGESTS.asc
+wget ${mirror}releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt
+version=$(sed -n -e 3p latest-stage3-armv7a_hardfp.txt | grep -o '^\S*' |  cut -d \/ -f 1)
+wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2
+wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2.DIGESTS.asc
 wget ${mirror}snapshots/portage-latest.tar.xz
 wget ${mirror}snapshots/portage-latest.tar.xz.md5sum
 
-stageTSig=$(awk '/SHA/{getline; print}' stage3-amd64-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
+stageTSig=$(awk '/SHA/{getline; print}' stage3-armv7a_hardfp-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
 echo $stageTSig
-stageDSig=$(sha512sum stage3-amd64-${version}.tar.bz2 | awk '{print $1}')
+stageDSig=$(sha512sum stage3-armv7a_hardfp-${version}.tar.bz2 | awk '{print $1}')
 echo $stageDSig
 portageTSig=$(md5sum portage-latest.tar.xz)
 portageDSig=$(grep xz portage-latest.tar.xz.md5sum)
@@ -49,14 +49,14 @@ do
   rm portage*
   mirrorSeed=$((($(date +%s)%${numMirrors})+1))
   mirror=$(sed -n -e ${mirrorSeed}p mirrors)
-  wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64.txt
-  version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 1)
-  wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
-  wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2.DIGESTS.asc
+  wget ${mirror}releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt
+  version=$(sed -n -e 3p latest-stage3-armv7a_hardfp.txt | grep -o '^\S*' |  cut -d \/ -f 1)
+  wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2
+  wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2.DIGESTS.asc
   wget ${mirror}snapshots/portage-latest.tar.xz
   wget ${mirror}snapshots/portage-latest.tar.xz.md5sum
-  stageTSig=$(awk '/SHA/{getline; print}' stage3-amd64-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
-  stageDSig=$(sha512sum stage3-amd64-${version}.tar.bz2 | awk '{print $1}')
+  stageTSig=$(awk '/SHA/{getline; print}' stage3-armv7a_hardfp-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
+  stageDSig=$(sha512sum stage3-armv7a_hardfp-${version}.tar.bz2 | awk '{print $1}')
   portageTSig=$(md5sum portage-latest.tar.xz)
   portageDSig=$(grep xz portage-latest.tar.xz.md5sum)
 }
@@ -64,7 +64,7 @@ done
 
 printf "Extracting stage3...\n"
 tar xvjpf stage3*.tar.bz2
-rm latest-stage3-amd64.txt
+rm latest-stage3-armv7a_hardfp.txt
 rm stage3*
 mv portage-latest.tar.xz usr/
 cd usr
@@ -75,9 +75,9 @@ cd ..
 
 
 #Edit fstab
-sed -i -e 's/BOOT/sda1/g' etc/fstab
-sed -i -e 's/SWAP/sda2/g' etc/fstab
-sed -i -e 's/ROOT/sda3/g' etc/fstab
+sed -i -e 's/BOOT/mmcblk0p5/g' etc/fstab
+sed -i -e '/SWAP/d' etc/fstab
+sed -i -e 's/ROOT/mmcblk0p5/g' etc/fstab
 sed -i -e 's/ext2/ext4/g' etc/fstab
 sed -i -e 's/ext3/ext4/g' etc/fstab
 
