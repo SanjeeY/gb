@@ -52,8 +52,7 @@ grub2-mkconfig -o /boot/grub/grub.cfg
 printf "[3.] Building xorg-server\n"
 printf "=======================================================================\n"
 . /buildScripts/xorg.sh
-printf "x11-apps/mesa-progs -egl -gles2\nsys-libs/zlib minizip\napp-crypt/pinentry gnome-keyring\nmedia-libs/mesa gles2\nmedia-libs/cogl gles2\ngnome-base/gnome-control-center networkmanager\napp-crypt/gcr gtk\n" >> /etc/portage/package.use/mesaprogs
-emerge gdm
+emerge gdm gnome-terminal gnome
 emerge --sync
 systemctl enable gdm
 passwd
