@@ -26,35 +26,6 @@ wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a
 wget ${mirror}snapshots/portage-latest.tar.xz
 wget ${mirror}snapshots/portage-latest.tar.xz.md5sum
 
-stageTSig=$(awk '/SHA/{getline; print}' stage3-armv7a_hardfp-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
-echo $stageTSig
-stageDSig=$(sha512sum stage3-armv7a_hardfp-${version}.tar.bz2 | awk '{print $1}')
-echo $stageDSig
-portageTSig=$(md5sum portage-latest.tar.xz)
-portageDSig=$(grep xz portage-latest.tar.xz.md5sum)
-echo $portageTSig
-echo $portageDSig
-#Download and extract stage3 and portage files.
-while [[ "$stageTSig" != "$stageDSig" || $portageTSig != $portageDSig ]];
-do
-{
-  rm stage3*
-  rm portage*
-  mirrorSeed=$((($(date +%s)%${numMirrors})+1))
-  mirror=$(sed -n -e ${mirrorSeed}p mirrors)
-  wget ${mirror}releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt
-  version=$(sed -n -e 3p latest-stage3-armv7a_hardfp.txt | grep -o '^\S*' |  cut -d \/ -f 1)
-  wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2
-  wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2.DIGESTS.asc
-  wget ${mirror}snapshots/portage-latest.tar.xz
-  wget ${mirror}snapshots/portage-latest.tar.xz.md5sum
-  stageTSig=$(awk '/SHA/{getline; print}' stage3-armv7a_hardfp-${version}.tar.bz2.DIGESTS.asc | awk 'NR==2{print $1;}')
-  stageDSig=$(sha512sum stage3-armv7a_hardfp-${version}.tar.bz2 | awk '{print $1}')
-  portageTSig=$(md5sum portage-latest.tar.xz)
-  portageDSig=$(grep xz portage-latest.tar.xz.md5sum)
-}
-done
-
 printf "Extracting stage3...\n"
 tar xvjpf stage3*.tar.bz2
 rm latest-stage3-armv7a_hardfp.txt
