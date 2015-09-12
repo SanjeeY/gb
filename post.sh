@@ -28,6 +28,9 @@ cp arch/arm/boot/dts/*.dtb /boot/
 cp arch/arm/boot/dts/overlays/*.dtb* /boot/overlays/
 cp arch/arm/boot/dts/overlays/README /boot/overlays/
 scripts/mkknlimg arch/arm/boot/zImage /boot/$KERNEL.img
+make install
+echo "=media-libs/raspberrypi-userland-9999 **" >> /etc/portage/package.accept_keywords
+emerge =media-libs/raspberrypi-userland-9999
 #cp /usr/src/linux/arch/arm/boot/zImage /boot/kernel7.img
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
