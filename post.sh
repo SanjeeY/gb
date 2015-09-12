@@ -5,11 +5,6 @@
 source /etc/profile
 env-update
 
-#ln -s /usr/share/zoneinfo/US/Eastern /etc/localtime
-#sed -i s/#en/en/g /etc/locale.gen
-#locale-gen
-#eselect locale set 4
-
 #Download and build kernel. Uses included kernel config file from git.
 printf "\n\n[1.] Building kernel\n"
 printf "=======================================================================\n"
@@ -25,10 +20,8 @@ cp /.config .
 cpucores=$(grep -c ^processor /proc/cpuinfo)
 make oldconfig
 make -j${cpucores}
-#make modules
 make modules_install
 make install
-#cp /usr/src/linux/arch/arm/boot/zImage /boot/kernel7.img
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
 printf "\n\n[2.] Updating world and installing various network utilities\n"

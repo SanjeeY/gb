@@ -59,6 +59,10 @@ do
   stageDSig=$(sha512sum stage3-amd64-${version}.tar.bz2 | awk '{print $1}')
   portageTSig=$(md5sum portage-latest.tar.xz)
   portageDSig=$(grep xz portage-latest.tar.xz.md5sum)
+  echo $stageTSig
+  echo $stageDSig
+  echo $portageTSig
+  echo $portageDSig
 }
 done
 
