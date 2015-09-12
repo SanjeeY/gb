@@ -55,7 +55,8 @@ grub2-mkconfig -o /boot/grub/grub.cfg
 printf "\n\n[3.] Building xorg-server\n"
 printf "=======================================================================\n"
 . /buildScripts/xorg.sh
-emerge gdm gnome-terminal gnome
+emerge gdm guake
+emerge virtualbox-guest-additions
 emerge --sync
 systemctl enable gdm
 passwd
@@ -63,7 +64,7 @@ passwd
 #printf "[4.] Building Cinnamon\n"
 #printf "=======================================================================\n"
 #. /buildScripts/buildCinnamon.sh
-
+printf "=======================================================================\n"
 printf "\n\n\nGentoo Linux has been installed\n"
 printf "wpa_supplicant.conf in /etc/wpa_supplicant may need to be edited if it\n"
 printf "wasn't modified prior to installation. dhcpcd may need to be run on first\n"
