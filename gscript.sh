@@ -9,14 +9,7 @@ read start
 if [ "$start" == "y" ]
 then
 #Create working directory
-mkfs.ext4 -F /dev/mmcblk0p5
-mkfs.ext4 -F /dev/mmcblk0p6
-mkdir /mnt/gentoo/
-mount /dev/sda3 /mnt/gentoo
 mkdir /mnt/gentoo/boot
-mount /dev/sda1 /mnt/gentoo/boot
-swapon /dev/sda2
-
 
 #Generate random seed for mirror selection
 cp mirrors /mnt/gentoo/

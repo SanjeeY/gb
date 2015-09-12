@@ -13,17 +13,21 @@ env-update
 #Download and build kernel. Uses included kernel config file from git.
 printf "\n\n[1.] Building kernel\n"
 printf "=======================================================================\n"
-printf "=sys-kernel/gentoo-sources-4.2.0-r1 ~arm\n" >> /etc/portage/package.accept_keywords
-emerge =sys-kernel/gentoo-sources-4.2.0-r1 linux-firmware cpuinfo2cpuflags
+emerge git cpuinfo2cpuflags bc
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
-cd /usr/src/linux
-cp /.config .
+cd /usr/src
+git clone https://github.com/raspberrypi/linux.git
+cd linux
 cpucores=$(grep -c ^processor /proc/cpuinfo)
-make oldconfig
+KERNEL=kernel7
+make bcm2709_defconfig
 make -j${cpucores}
-#make modules
+make zImage modules dtbs
 make modules_install
-make install
+cp arch/arm/boot/dts/*.dtb /boot/
+cp arch/arm/boot/dts/overlays/*.dtb* /boot/overlays/
+cp arch/arm/boot/dts/overlays/README /boot/overlays/
+scripts/mkknlimg arch/arm/boot/zImage /boot/$KERNEL.img
 #cp /usr/src/linux/arch/arm/boot/zImage /boot/kernel7.img
 
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
