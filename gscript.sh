@@ -22,9 +22,8 @@ mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 wget ${mirror}releases/arm/autobuilds/latest-stage3-armv7a_hardfp.txt
 version=$(sed -n -e 3p latest-stage3-armv7a_hardfp.txt | grep -o '^\S*' |  cut -d \/ -f 1)
 wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2
-wget ${mirror}releases/arm/autobuilds/current-stage3-armv7a_hardfp/stage3-armv7a_hardfp-${version}.tar.bz2.DIGESTS.asc
 wget ${mirror}snapshots/portage-latest.tar.xz
-wget ${mirror}snapshots/portage-latest.tar.xz.md5sum
+
 
 printf "Extracting stage3...\n"
 tar xvjpf stage3*.tar.bz2
