@@ -33,7 +33,7 @@ printf "\n\n[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
-emerge -uDN @world grub wpa_supplicant dhcpcd wireless-tools cryptsetup sudo
+emerge -uDN @world grub wpa_supplicant dhcpcd vixie-cron cryptsetup sudo
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
@@ -58,7 +58,7 @@ emerge virtualbox-guest-additions
 emerge --sync
 systemctl enable lxdm
 passwd
-sed -i "/s/# %wheel/%wheel" /etc/sudoersb
+sed -i "/s/# %wheel/%wheel" /etc/sudoers
 
 printf "Enter username for new user\n"
 read username
