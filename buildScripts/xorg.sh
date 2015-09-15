@@ -16,4 +16,4 @@ printf "x11-drivers/xf86-video-r128\n" >> /etc/portage/package.unmask
 printf "media-libs/gexiv2 introspection\n" >> /etc/portage/package.use/zlib
 printf "x11-libs/gdk-pixbuf jpeg\ngnome-base/gvfs cdda\nmedia-libs/gst-plugins-base theora\nwww-servers/apache apache2_mpms_prefork apache2_modules_auth_digest\ndev-libs/folks eds\nmedia-libs/clutter gtk\nvirtual/libgudev introspection\ndev-libs/libgdata gnome\nsys-apps/systemd introspection\nmedia-gfx/imagemagick jpeg png\ngnome-extra/evolution-data-server vala\napp-misc/tracker gstreamer\n" >> /etc/portage/package.use/zlib
 printf "sys-libs/zlib minizip\napp-crypt/pinentry gnome-keyring\nmedia-libs/mesa gles2\nmedia-libs/cogl gles2\ngnome-base/gnome-control-center networkmanager\napp-crypt/gcr gtk\ngnome-base/gvfs gtk\napp-text/poppler cairo\nmedia-plugins/grilo-plugins upnp-av tracker\nmedia-libs/grilo playlist\ndev-libs/libgdata gnome\n" >> /etc/portage/package.use/mesaprogs
-emerge xorg-server
+emerge xorg-server twm xclock xterm
