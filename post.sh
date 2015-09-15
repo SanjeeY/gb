@@ -16,9 +16,9 @@ cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 #printf "=sys-devel/gcc-4.9.3 ~amd64\n" >> /etc/portage/package.accept_keywords
 #emerge =sys-devel/gcc-4.9.3
 #gcc-config 2
+y
 
-
-rintf "=sys-kernel/gentoo-sources-4.2.0-r1 ~amd64\n" >> /etc/portage/package.accept_keywords
+printf "=sys-kernel/gentoo-sources-4.2.0-r1 ~amd64\n" >> /etc/portage/package.accept_keywords
 emerge =sys-kernel/gentoo-sources-4.2.0-r1 linux-firmware
 cd /usr/src/linux
 cp /.config .
