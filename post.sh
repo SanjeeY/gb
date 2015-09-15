@@ -33,12 +33,11 @@ printf "\n\n[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
-emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools cryptsetup sudo
+emerge -uDN @world grub wpa_supplicant dhcpcd wireless-tools cryptsetup sudo
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
 systemctl enable dhcpcd
-systemctl enable ntpd
 timedatectl set-ntp true
 timedatectl set-timezone US/Eastern
 
