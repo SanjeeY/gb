@@ -38,7 +38,7 @@ mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 mv /buildScripts/setTimeZone /etc/cron.hourly/
 sed -i "/s/# %wheel/%wheel" /etc/sudoers
 #Enables ssh, dhcpcd, and ntp.
-Systemctl enable sshd
+systemctl enable sshd
 systemctl enable dhcpcd
 systemctl enable vixie-cron
 
