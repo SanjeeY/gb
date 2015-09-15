@@ -33,12 +33,12 @@ printf "\n\n[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
-emerge -uDN @world grub wpa_supplicant dhcpcd vixie-cron cryptsetup sudo
+emerge -uDN @world grub wpa_supplicant dhcpcd vixie-cron cryptsetup sudo wireless-tools
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 mv /buildScripts/setTimeZone /etc/cron.hourly/
 sed -i "/s/# %wheel/%wheel" /etc/sudoers
 #Enables ssh, dhcpcd, and ntp.
-systemctl enable sshd
+Systemctl enable sshd
 systemctl enable dhcpcd
 systemctl enable vixie-cron
 
@@ -51,7 +51,6 @@ printf "=======================================================================\
 . /buildScripts/xorg.sh
 emerge lxdm
 . /buildScripts/buildLXQt.sh
-emerge virtualbox-guest-additions
 emerge --sync
 systemctl enable lxdm
 passwd
