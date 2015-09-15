@@ -50,6 +50,7 @@ printf "\n\n[3.] Building xorg-server\n"
 printf "=======================================================================\n"
 . /buildScripts/xorg.sh
 emerge lxdm
+. /buildScripts/buildLXQt.sh
 emerge virtualbox-guest-additions
 emerge --sync
 systemctl enable lxdm
