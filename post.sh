@@ -34,6 +34,7 @@ mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 systemctl enable sshd
 systemctl enable dhcpcd
 systemctl enable ntpd
+timedatectl set-ntp true
 timedatectl set-timezone US/Eastern
 
 #Update config files
