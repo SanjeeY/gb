@@ -8,8 +8,6 @@ env-update
 #Download and build kernel. Uses included kernel config file from git.
 printf "\n\n[1.] Building kernel\n"
 printf "=======================================================================\n"
-emerge cpuinfo2cpuflags
-cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 
 #Build GCC 4.9
 #=======================
@@ -19,7 +17,9 @@ cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
 
 
 printf "=sys-kernel/gentoo-sources-4.2.0-r1 ~amd64\n" >> /etc/portage/package.accept_keywords
-emerge =sys-kernel/gentoo-sources-4.2.0-r1 linux-firmware
+emerge =sys-kernel/gentoo-sources-4.2.0-r1 linux-firmware cpuinfo2cpuflags
+cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
+
 cd /usr/src/linux
 cp /.config .
 cpucores=$(grep -c ^processor /proc/cpuinfo)
