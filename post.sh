@@ -35,17 +35,13 @@ printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
 emerge -uDN @world grub wpa_supplicant dhcpcd vixie-cron cryptsetup sudo
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
+mv /buildScripts/setTimeZone /etc/cron.hourly/
+sed -i "/s/# %wheel/%wheel" /etc/sudoers
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
 systemctl enable dhcpcd
-timedatectl set-ntp true
-timedatectl set-timezone US/Eastern
+systemctl enable vixie-cron
 
-#Update config files
-etc-update --automode -3
-
-
-emerge --depclean
 grub2-install --target=i386-pc /dev/sda
 grub2-mkconfig -o /boot/grub/grub.cfg
 
@@ -58,13 +54,14 @@ emerge virtualbox-guest-additions
 emerge --sync
 systemctl enable lxdm
 passwd
-sed -i "/s/# %wheel/%wheel" /etc/sudoers
 
 printf "Enter username for new user\n"
 read username
 useradd -G wheel $username
 printf "Enter passwd for new user\m"
 passwd $username
+mkdir /home/$username
+chown $username:$username /home/$username
 
 
 #printf "[4.] Building Cinnamon\n"
