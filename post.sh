@@ -10,10 +10,15 @@ printf "\n\n[1.] Building kernel\n"
 printf "=======================================================================\n"
 emerge cpuinfo2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
-printf "=sys-devel/gcc-4.9.3 ~amd64\n" >> /etc/portage/package.accept_keywords
-emerge =sys-devel/gcc-4.9.3
-gcc-config 2
-printf "=sys-kernel/gentoo-sources-4.2.0-r1 ~amd64\n" >> /etc/portage/package.accept_keywords
+
+#Build GCC 4.9
+#=======================
+#printf "=sys-devel/gcc-4.9.3 ~amd64\n" >> /etc/portage/package.accept_keywords
+#emerge =sys-devel/gcc-4.9.3
+#gcc-config 2
+
+
+rintf "=sys-kernel/gentoo-sources-4.2.0-r1 ~amd64\n" >> /etc/portage/package.accept_keywords
 emerge =sys-kernel/gentoo-sources-4.2.0-r1 linux-firmware
 cd /usr/src/linux
 cp /.config .
@@ -28,7 +33,7 @@ printf "\n\n[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 printf "sys-fs/cryptsetup -gcrypt\n" >> /etc/portage/package.use/cryptsetup
 eselect profile set 12
-emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools cryptsetup
+emerge -uDN @world ntp grub wpa_supplicant dhcpcd wireless-tools cryptsetup sudo
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
@@ -49,11 +54,19 @@ grub2-mkconfig -o /boot/grub/grub.cfg
 printf "\n\n[3.] Building xorg-server\n"
 printf "=======================================================================\n"
 . /buildScripts/xorg.sh
-emerge gdm guake
+emerge lxdm
 emerge virtualbox-guest-additions
 emerge --sync
-systemctl enable gdm
+systemctl enable lxdm
 passwd
+sed -i "/s/# %wheel/%wheel" /etc/sudoersb
+
+printf "Enter username for new user\n"
+read username
+useradd -G wheel $username
+printf "Enter passwd for new user\m"
+passwd $username
+
 
 #printf "[4.] Building Cinnamon\n"
 #printf "=======================================================================\n"
