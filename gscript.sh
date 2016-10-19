@@ -10,11 +10,8 @@ if [ "$start" == "y" ]
 then
 #Create working directory
 mkfs.ext4 -F /dev/sda1
-mkfs.ext4 -F /dev/sda3
 mkdir /mnt/gentoo/
-mount /dev/sda3 /mnt/gentoo
-mkdir /mnt/gentoo/boot
-mount /dev/sda1 /mnt/gentoo/boot
+mount /dev/sda1 /mnt/gentoo
 swapon /dev/sda2
 
 
@@ -26,10 +23,10 @@ mirrorSeed=$((($(date +%s)%${numMirrors})+1))
 mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 
-wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64.txt
-version=$(sed -n -e 3p latest-stage3-amd64.txt | grep -o '^\S*' |  cut -d \/ -f 1)
-wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2
-wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-${version}.tar.bz2.DIGESTS.asc
+wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64-systemd.txt
+version=$(sed -n -e 3p latest-stage3-amd64-systemd.txt | grep -o '^\S*' |  cut -d \/ -f 1)
+wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64-systemd/stage3-amd64-systemd-${version}.tar.bz2
+wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64-systemd/stage3-amd64-systemd${version}.tar.bz2.DIGESTS.asc
 wget ${mirror}snapshots/portage-latest.tar.xz
 wget ${mirror}snapshots/portage-latest.tar.xz.md5sum
 
