@@ -33,7 +33,20 @@ grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
 emerge --sync
+
+eselect profile set 5
+echo "gnome-base/gnome-control-center networkmanager" >> /etc/portage/package.use
+emerge -uDN @world gdm
+systemctl enable gdm
 passwd
+
+printf "Enter username for new user\n"
+read username
+useradd -G sudo $username
+printf "Enter passwd for new user\m"
+passwd $username
+mkdir /home/$username
+chown $username:$username /home/$username
 
 printf "\n\n\nGentoo Linux has been installed\n"
 printf "wpa_supplicant.conf in /etc/wpa_supplicant may need to be edited if it\n"
