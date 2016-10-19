@@ -9,12 +9,6 @@ env-update
 printf "\n\n[1.] Building kernel\n"
 printf "=======================================================================\n"
 
-#Build GCC 4.9
-#=======================
-#printf "=sys-devel/gcc-4.9.3 ~amd64\n" >> /etc/portage/package.accept_keywords
-#emerge =sys-devel/gcc-4.9.3
-#gcc-config 2
-
 
 emerge gentoo-sources linux-firmware cpuid2cpuflags
 cpuinfo2cpuflags-x86 >> /etc/portage/make.conf
