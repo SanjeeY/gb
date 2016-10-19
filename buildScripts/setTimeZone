@@ -1,4 +1,0 @@
-#!bin/bash
-timedatectl set-ntp true
-timedatectl set-timezone US/Eastern
-rm /etc/cron.hourly/setTimeZone
