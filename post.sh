@@ -1,7 +1,4 @@
 #!/bin/bash
-#startH=$(date '+%-H')
-#startM=$(date '+%-M')
-#startS=$(date '+%-S')
 source /etc/profile
 env-update
 
