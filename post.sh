@@ -22,7 +22,7 @@ make install
 printf "\n\n[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
 eselect profile set 12
-emerge -uDN @world grub wpa_supplicant dhcpcd sudo wireless-tools cryptsetup
+emerge -uDN @world grub wpa_supplicant dhcpcd sudo cryptsetup
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 sed -i "s/# %sudo/%sudo/" /etc/sudoers
 #Enables ssh, dhcpcd, and ntp.
