@@ -9,7 +9,6 @@ read start
 if [ "$start" == "y" ]
 then
 #Create working directory
-sudo su
 mkfs.ext4 -F /dev/sda1
 mkdir /mnt/gentoo/
 mount /dev/sda1 /mnt/gentoo
