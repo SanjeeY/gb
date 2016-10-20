@@ -24,10 +24,10 @@ mirrorSeed=$((($(date +%s)%${numMirrors})+1))
 mirror=$(sed -n -e ${mirrorSeed}p mirrors)
 
 
-wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64-systemd-systemd.txt
-version=$(sed -n -e 3p latest-stage3-amd64-systemd-systemd.txt | grep -o '^\S*' |  cut -d \/ -f 1)
-wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64-systemd-systemd/stage3-amd64-systemd-systemd-${version}.tar.bz2
-wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64-systemd-systemd/stage3-amd64-systemd-systemd-${version}.tar.bz2.DIGESTS.asc
+wget ${mirror}releases/amd64/autobuilds/latest-stage3-amd64-systemd.txt
+version=$(sed -n -e 3p latest-stage3-amd64-systemd.txt | grep -o '^\S*' |  cut -d \/ -f 1)
+wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64-systemd/stage3-amd64-systemd-${version}.tar.bz2
+wget ${mirror}releases/amd64/autobuilds/current-stage3-amd64-systemd/stage3-amd64-systemd-${version}.tar.bz2.DIGESTS.asc
 wget ${mirror}snapshots/portage-latest.tar.xz
 wget ${mirror}snapshots/portage-latest.tar.xz.md5sum
 
