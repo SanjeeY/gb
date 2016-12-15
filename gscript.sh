@@ -64,7 +64,6 @@ mount --make-rslave dev
 cp ${scriptdir}/.config .
 cp ${scriptdir}/wpa_supplicant.conf .
 cp ${scriptdir}/post.sh .
-cp -R ${scriptdir}/buildScripts .
 
 #Enter chroot and execute post.sh
 chroot /mnt/gentoo ./post.sh

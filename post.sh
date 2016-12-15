@@ -25,6 +25,10 @@ eselect profile set 12
 emerge -uDN @world grub wpa_supplicant dhcpcd sudo cryptsetup
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 sed -i "s/# %sudo/%sudo/" /etc/sudoers
+sed -i "s/SWAP/sda1/" /etc/fstab
+sed -i "s/ROOT/sda2/" /etc/fstab
+sed -i "s/BOOT/d" /etc/fstab
+echo 'GRUB_CMDLINE_LINUX="init=/usr/lib/systemd/systemd"' >> /etc/default/grub"
 #Enables ssh, dhcpcd, and ntp.
 systemctl enable sshd
 systemctl enable dhcpcd
