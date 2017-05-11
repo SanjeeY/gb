@@ -21,7 +21,6 @@ make install
 #Selects vanilla systemd profile. Builds systemd, bootloader, some net tools and a world update.
 printf "\n\n[2.] Updating world and installing various network utilities\n"
 printf "=======================================================================\n"
-eselect profile set 12
 emerge -uDN @world grub wpa_supplicant dhcpcd sudo 
 mv /wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 echo 'GRUB_CMDLINE_LINUX="init=/usr/lib/systemd/systemd"' >> /etc/default/grub
